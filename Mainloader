@@ -1,9 +1,0 @@
-local v1 = game.PlaceId;
--- Bloxfruits
-if (v1 == 2753915549) then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/bloxfruits?token=GHSAT0AAAAAAC63RFAQZQAWJL6GRBJ2MD5EZ5OKD4Q", true))()
-elseif (v1 == 4442272183) then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/bloxfruits?token=GHSAT0AAAAAAC63RFAQZQAWJL6GRBJ2MD5EZ5OKD4Q", true))()
-elseif (v1 == 7449423635) then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/bloxfruits?token=GHSAT0AAAAAAC63RFAQZQAWJL6GRBJ2MD5EZ5OKD4Q", true))()
-end
