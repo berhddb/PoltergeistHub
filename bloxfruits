@@ -1,5 +1,5 @@
 
-local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/library", true))()
+local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/library?token=GHSAT0AAAAAAC63RFAR3QNCTIRSRYMC4G5AZ5OKXDA", true))()
 local v14 = Poltergeist
 
 local Window = Poltergeist:CreateWindow({
