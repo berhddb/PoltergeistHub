@@ -781,20 +781,20 @@
 
 	-- Lista de usuários e senhas
 	local Users = {
-		["bernx"] = {
+		["berhddb"] = {
 			password = "lobinho10",
 			hasKey = true
 		},
 		["nikhdd1"] = {
-			password = "lobinho11",
-			hasKey = false
+			password = "lobinho10",
+			hasKey = true
 		},
 	}
 
 	-- Lista de chaves manualmente definidas e longas
 	local Keys = {
 		["sdjoWasdAVZS321aasdjzxASVBYU4r23tc"] = {
-			assignedAccount = "bernx"
+			assignedAccount = "berhdbb"
 		},
 		["GvbsdfjVXNGR23456erTTw234lkjsdk7f8"] = {
 			assignedAccount = "nikhdd1"
