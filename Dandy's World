@@ -27,8 +27,6 @@ local Window = Poltergeist:CreateWindow({
     KeySystem = false
 })
 
-sound(9067086414)
-
 -- Create main tab
 local Tab = Window:CreateHomeTab({
     Icon = 1,
@@ -687,7 +685,7 @@ local function StopTeleportWalk()
     tpWalking = false
 end
 
-local TpWalkSpeedSlider = PlayerTap:CreateSlider({
+local TpWalkSpeedSlider = PlayerTab:CreateSlider({
     Name = "Teleport Walk Speed",
     Description = "Adjust movement speed multiplier",
     Range = {0.1, 5},
