@@ -37,7 +37,7 @@ local Tab = Window:CreateHomeTab({
 -- Create Visual tab
 local VisualTab = Window:CreateTab({
     Name = "Visual",
-    Icon = "eye",
+    Icon = "visibility",
     ImageSource = "Material",
     ShowTitle = true
 })
@@ -484,7 +484,7 @@ local NoVeePopUps = VisualTab:CreateButton({
 -- Create General tab
 local GeneralTab = Window:CreateTab({
     Name = "General",
-    Icon = "calendar",
+    Icon = "calendar_today",
     ImageSource = "Material",
     ShowTitle = true
 })
@@ -657,7 +657,7 @@ local AutoGTEToggle = GeneralTab:CreateToggle({
 -- Create Player tab
 local PlayerTab = Window:CreateTab({
     Name = "Player",
-    Icon = "circle-user",
+    Icon = "account_circle",
     ImageSource = "Material",
     ShowTitle = true
 })
@@ -962,7 +962,7 @@ local JumpBTN = PlayerTab:CreateButton({
 -- Create Others tab
 local OthersTab = Window:CreateTab({
     Name = "Others",
-    Icon = "circle-plus",
+    Icon = "add_circle",
     ImageSource = "Material",
     ShowTitle = true
 })
