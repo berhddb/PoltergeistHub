@@ -31,7 +31,7 @@ local Window = Poltergeist:CreateWindow({
 local Tab = Window:CreateHomeTab({
     Icon = 1,
     SupportedExecutors = {"Xeno", "Sonar", "Solara", "Swift", "Argon"},
-    DiscordInvite = "noinvitelink"
+    DiscordInvite = "c5mZwdzbHx"
 })
 
 -- Create General tab
