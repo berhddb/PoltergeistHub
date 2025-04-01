@@ -685,7 +685,7 @@ local function StopTeleportWalk()
     tpWalking = false
 end
 
-local TpWalkSpeedSlider = VisualTab:CreateSlider({
+local TpWalkSpeedSlider = PlayerTap:CreateSlider({
     Name = "Teleport Walk Speed",
     Description = "Adjust movement speed multiplier",
     Range = {0.1, 5},
