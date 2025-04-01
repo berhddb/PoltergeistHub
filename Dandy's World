@@ -42,8 +42,6 @@ local VisualTab = Window:CreateTab({
     ShowTitle = true
 })
 
-VisualTab:CreateSection("Visual")
-
 -- Generator ESP System
 local GeneratorESP = false
 local GeneratorESPToggle = VisualTab:CreateToggle({
@@ -1003,7 +1001,7 @@ local Nscript = OthersTab:CreateButton({
     Name = "Noxious Hub",
     Description = "Loads Noxious Hub (Made by Unable :o)",
     Callback = function()
-         loadstring(game:HttpGet("https://raw.githubusercontent.com/RodeStriker/TheDandyHelper/refs/heads/main/GAC"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NXSendeavor/endeavor/refs/heads/main/DSWDendeavor"))()
             sound(8486683243)
             Poltergeist:Notification({ 
                 Title = "Notification",
