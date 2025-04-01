@@ -27,6 +27,8 @@ local Window = Poltergeist:CreateWindow({
     KeySystem = false
 })
 
+sound(9067086414)
+
 -- Create main tab
 local Tab = Window:CreateHomeTab({
     Icon = 1,
