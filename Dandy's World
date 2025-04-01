@@ -521,13 +521,11 @@ local AutoSkillCheck = GeneralTab:CreateButton({
     end
 })
 
-local FBValue = false
 local FullBright = GeneralTab:CreateButton({
     Name = "💡 Fullbright",
     Description = "Remove game darkness",
     Callback = function()
-        if FBValue == false then
-            FBValue = true
+        if game.Lighting.Brightness ~= 2 then 
             local Lighting = game:GetService("Lighting")
             Lighting.Brightness = 2
             Lighting.ClockTime = 14
@@ -548,6 +546,36 @@ local FullBright = GeneralTab:CreateButton({
                 Icon = "notifications_active",
                 ImageSource = "Material",
                 Content = "Fullbright is already activated"
+            })
+        end
+    end
+})
+
+local disFB = GeneralTab:CreateButton({
+    Name = "❌💡 Disable fullbright",
+    Description = "Disable the fullbright effect",
+    Callback = function()
+        if game.Lighting.Brightness == 2 then 
+            local Lighting = game:GetService("Lighting")
+            Lighting.Brightness = 3
+            Lighting.ClockTime = 0
+            Lighting.FogEnd = 250
+            Lighting.GlobalShadows = true
+            Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright disabled"
+            })
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright is not activated"
             })
         end
     end
