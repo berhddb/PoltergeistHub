@@ -25,7 +25,7 @@ local Window = Poltergeist:CreateWindow({
 		Key = {"Example Key"}, -- Lista de chaves aceitas pelo sistema, por favor use um sistema como Pelican ou Luarmor que fornecem chaves baseadas no HWID, pois colocar uma string simples é fácil de burlar
 		SecondAction = {
 			Enabled = true, -- Defina como false se não quiser uma segunda ação
-			Type = "Link", -- Link / Discord
+			Type = "c5mZwdzbHx", -- Link / Discord
 			Parameter = "" -- Se o tipo for Discord, coloque o link de convite (NÃO COLOQUE DISCORD.GG/). Caso contrário, coloque o link completo do seu sistema de chave aqui
 		}
 	}
