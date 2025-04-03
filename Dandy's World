@@ -1,6 +1,7 @@
 -- Dandy's World
 local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
 local VirtualInputManager = game:GetService('VirtualInputManager')
+local player = game.Players.LocalPlayer
 local function sound(id)
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://"..id
@@ -520,7 +521,7 @@ local AutoSkillCheck = GeneralTab:CreateButton({
         end
     end
 })
-local function  AutoSkillCheck()
+local function AutoSkillCheck()
 			local screenGui = player.PlayerGui:FindFirstChild("ScreenGui")
 			if not screenGui then
 				return
