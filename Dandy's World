@@ -1,5 +1,5 @@
 -- Dandy's World
-print(Loading Poltergeist Hub Dandy's World v.1.0.1
+print("Loading Poltergeist Hub Dandy's World v.1.0.1")
 local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
 local VirtualInputManager = game:GetService('VirtualInputManager')
 local player = game.Players.LocalPlayer
