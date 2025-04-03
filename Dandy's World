@@ -1,6 +1,6 @@
 -- Dandy's World
 local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
-
+local VirtualInputManager = game:GetService('VirtualInputManager')
 local function sound(id)
     local sound = Instance.new("Sound")
     sound.SoundId = "rbxassetid://"..id
@@ -516,6 +516,104 @@ local AutoSkillCheck = GeneralTab:CreateButton({
                 Icon = "notifications_active",
                 ImageSource = "Material",
                 Content = "Auto Skill Check is already activated"
+            })
+        end
+    end
+})
+local function  AutoSkillCheck()
+			local screenGui = player.PlayerGui:FindFirstChild("ScreenGui")
+			if not screenGui then
+				return
+			end
+
+			local menu = screenGui:FindFirstChild("Menu")
+			if not menu then
+				return
+			end
+
+			local skillCheckFrame = menu:FindFirstChild("SkillCheckFrame")
+			if not skillCheckFrame then
+				return
+			end
+
+			-- Function to perform the check when skill check frame is visible
+			local function onVisibilityChanged()
+				if skillCheckFrame.Visible then
+					local marker = skillCheckFrame:FindFirstChild("Marker")
+					local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+
+					if marker and goldArea then
+						local markerPosition = marker.AbsolutePosition
+						local goldAreaPosition = goldArea.AbsolutePosition
+						local goldAreaSize = goldArea.AbsoluteSize
+
+						-- Check if the Marker is within the bounds of the GoldArea
+						if markerPosition.X >= goldAreaPosition.X and markerPosition.X <= (goldAreaPosition.X + goldAreaSize.X) + TOLERANCE then
+							-- Send spacebar press event
+							VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
+						end
+					end
+				end
+			end
+
+			-- Connect to the VisibilityChanged event
+			skillCheckFrame.Changed:Connect(function(property)
+				if property == "Visible" then
+					onVisibilityChanged()
+				end
+			end)
+
+			-- Detect changes in Marker and GoldArea positions
+			local marker = skillCheckFrame:FindFirstChild("Marker")
+			local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+
+			if marker then
+				marker.Changed:Connect(function(property)
+					if property == "AbsolutePosition" then
+						onVisibilityChanged()
+					end
+				end)
+			end
+
+			if goldArea then
+				goldArea.Changed:Connect(function(property)
+					if property == "AbsolutePosition" or property == "AbsoluteSize" then
+						onVisibilityChanged()
+					end
+				end)
+			end
+		end
+
+
+-- Auto skill check 2 System
+local SC2 = false
+local SC2Toggle = GeneralTab:CreateToggle({
+    Name = "🏓 Auto Skill Check 2",
+    Description = "Automatically completes skill checks",
+    CurrentValue = false,
+    Callback = function(v)
+        SC2 = v
+        if SC2 then
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Auto Skill Check has been activated"
+            })
+            coroutine.wrap(function()
+                while SC2 do
+                    AutoSkillCheck()
+                    wait(1)
+                end
+            end)()
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Auto Skill Check has been deactivated"
             })
         end
     end
