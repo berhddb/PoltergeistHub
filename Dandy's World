@@ -521,70 +521,59 @@ local AutoSkillCheck = GeneralTab:CreateButton({
         end
     end
 })
+-- Auto Skill Check System
 local function AutoSkillCheck()
-			local screenGui = player.PlayerGui:FindFirstChild("ScreenGui")
-			if not screenGui then
-				return
-			end
+    local screenGui = player.PlayerGui:FindFirstChild("ScreenGui")
+    if not screenGui then return end
 
-			local menu = screenGui:FindFirstChild("Menu")
-			if not menu then
-				return
-			end
+    local menu = screenGui:FindFirstChild("Menu")
+    if not menu then return end
 
-			local skillCheckFrame = menu:FindFirstChild("SkillCheckFrame")
-			if not skillCheckFrame then
-				return
-			end
+    local skillCheckFrame = menu:FindFirstChild("SkillCheckFrame")
+    if not skillCheckFrame then return end
 
-			-- Function to perform the check when skill check frame is visible
-			local function onVisibilityChanged()
-				if skillCheckFrame.Visible then
-					local marker = skillCheckFrame:FindFirstChild("Marker")
-					local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+    -- Constants
+    local TOLERANCE = 5 -- Adjust this value as needed
 
-					if marker and goldArea then
-						local markerPosition = marker.AbsolutePosition
-						local goldAreaPosition = goldArea.AbsolutePosition
-						local goldAreaSize = goldArea.AbsoluteSize
+    -- Function to perform the check when skill check frame is visible
+    local function onVisibilityChanged()
+        if skillCheckFrame.Visible then
+            local marker = skillCheckFrame:FindFirstChild("Marker")
+            local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
 
-						-- Check if the Marker is within the bounds of the GoldArea
-						if markerPosition.X >= goldAreaPosition.X and markerPosition.X <= (goldAreaPosition.X + goldAreaSize.X) + TOLERANCE then
-							-- Send spacebar press event
-							VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
-						end
-					end
-				end
-			end
+            if marker and goldArea then
+                local markerPosition = marker.AbsolutePosition
+                local goldAreaPosition = goldArea.AbsolutePosition
+                local goldAreaSize = goldArea.AbsoluteSize
 
-			-- Connect to the VisibilityChanged event
-			skillCheckFrame.Changed:Connect(function(property)
-				if property == "Visible" then
-					onVisibilityChanged()
-				end
-			end)
+                -- Check if the Marker is within the bounds of the GoldArea
+                if markerPosition.X >= goldAreaPosition.X and 
+                   markerPosition.X <= (goldAreaPosition.X + goldAreaSize.X) + TOLERANCE then
+                    -- Send spacebar press event
+                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
+                    task.wait(0.1)
+                    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Space, false, game)
+                end
+            end
+        end
+    end
 
-			-- Detect changes in Marker and GoldArea positions
-			local marker = skillCheckFrame:FindFirstChild("Marker")
-			local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+    -- Connect to the VisibilityChanged event
+    skillCheckFrame:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
 
-			if marker then
-				marker.Changed:Connect(function(property)
-					if property == "AbsolutePosition" then
-						onVisibilityChanged()
-					end
-				end)
-			end
+    -- Detect changes in Marker and GoldArea positions
+    local marker = skillCheckFrame:FindFirstChild("Marker")
+    local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
 
-			if goldArea then
-				goldArea.Changed:Connect(function(property)
-					if property == "AbsolutePosition" or property == "AbsoluteSize" then
-						onVisibilityChanged()
-					end
-				end)
-			end
-		end
+    if marker then
+        marker:GetPropertyChangedSignal("AbsolutePosition"):Connect(onVisibilityChanged)
+    end
 
+    if goldArea then
+        goldArea:GetPropertyChangedSignal("AbsolutePosition"):Connect(onVisibilityChanged)
+        goldArea:GetPropertyChangedSignal("AbsoluteSize"):Connect(onVisibilityChanged)
+    end
+end
 
 -- Auto skill check 2 System
 local SC2 = false
@@ -602,12 +591,16 @@ local SC2Toggle = GeneralTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Auto Skill Check has been activated"
             })
-            coroutine.wrap(function()
-                while SC2 do
-                    AutoSkillCheck()
-                    wait(1)
+            
+            -- Create a connection instead of using a loop
+            local connection
+            connection = game:GetService("RunService").Heartbeat:Connect(function()
+                if not SC2 then 
+                    connection:Disconnect()
+                    return
                 end
-            end)()
+                AutoSkillCheck()
+            end)
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -620,12 +613,135 @@ local SC2Toggle = GeneralTab:CreateToggle({
     end
 })
 
+-- Fullbright Feature
 local FullBright = GeneralTab:CreateButton({
     Name = "💡 Fullbright",
     Description = "Remove game darkness",
     Callback = function()
-        if game.Lighting.Brightness ~= 2 then 
-            local Lighting = game:GetService("Lighting")
+        local Lighting = game:GetService("Lighting")
+        if Lighting.Brightness ~= 2 then 
+            Lighting.Brightness = 2
+            Lighting.ClockTime = 14
+            Lighting.FogEnd = 100000
+            Lighting.GlobalShadows = false
+            Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright has been activated"
+            })
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright is already activated"
+            })
+        end
+    end
+})
+-- Auto Skill Check System
+local function AutoSkillCheck()
+    local screenGui = player.PlayerGui:FindFirstChild("ScreenGui")
+    if not screenGui then return end
+
+    local menu = screenGui:FindFirstChild("Menu")
+    if not menu then return end
+
+    local skillCheckFrame = menu:FindFirstChild("SkillCheckFrame")
+    if not skillCheckFrame then return end
+
+    -- Constants
+    local TOLERANCE = 5 -- Adjust this value as needed
+
+    -- Function to perform the check when skill check frame is visible
+    local function onVisibilityChanged()
+        if skillCheckFrame.Visible then
+            local marker = skillCheckFrame:FindFirstChild("Marker")
+            local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+
+            if marker and goldArea then
+                local markerPosition = marker.AbsolutePosition
+                local goldAreaPosition = goldArea.AbsolutePosition
+                local goldAreaSize = goldArea.AbsoluteSize
+
+                -- Check if the Marker is within the bounds of the GoldArea
+                if markerPosition.X >= goldAreaPosition.X and 
+                   markerPosition.X <= (goldAreaPosition.X + goldAreaSize.X) + TOLERANCE then
+                    -- Send spacebar press event
+                    VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
+                    task.wait(0.1)
+                    VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Space, false, game)
+                end
+            end
+        end
+    end
+
+    -- Connect to the VisibilityChanged event
+    skillCheckFrame:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+
+    -- Detect changes in Marker and GoldArea positions
+    local marker = skillCheckFrame:FindFirstChild("Marker")
+    local goldArea = skillCheckFrame:FindFirstChild("GoldArea")
+
+    if marker then
+        marker:GetPropertyChangedSignal("AbsolutePosition"):Connect(onVisibilityChanged)
+    end
+
+    if goldArea then
+        goldArea:GetPropertyChangedSignal("AbsolutePosition"):Connect(onVisibilityChanged)
+        goldArea:GetPropertyChangedSignal("AbsoluteSize"):Connect(onVisibilityChanged)
+    end
+end
+
+-- Auto skill check 2 System
+local SC2 = false
+local SC2Toggle = GeneralTab:CreateToggle({
+    Name = "🏓 Auto Skill Check 2",
+    Description = "Automatically completes skill checks",
+    CurrentValue = false,
+    Callback = function(v)
+        SC2 = v
+        if SC2 then
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Auto Skill Check has been activated"
+            })
+            
+            -- Create a connection instead of using a loop
+            local connection
+            connection = game:GetService("RunService").Heartbeat:Connect(function()
+                if not SC2 then 
+                    connection:Disconnect()
+                    return
+                end
+                AutoSkillCheck()
+            end)
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Auto Skill Check has been deactivated"
+            })
+        end
+    end
+})
+
+-- Fullbright Feature
+local FullBright = GeneralTab:CreateButton({
+    Name = "💡 Fullbright",
+    Description = "Remove game darkness",
+    Callback = function()
+        local Lighting = game:GetService("Lighting")
+        if Lighting.Brightness ~= 2 then 
             Lighting.Brightness = 2
             Lighting.ClockTime = 14
             Lighting.FogEnd = 100000
