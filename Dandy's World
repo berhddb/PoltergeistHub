@@ -583,6 +583,8 @@ local SC2 = GeneralTab:CreateButton({
     Callback = function()
         if SC2A == false then 
           SC2A = true
+print("auto skill check activated")
+AutoSkillCheck
             sound(8486683243)
             Poltergeist:Notification({ 
                 Title = "Notification",
