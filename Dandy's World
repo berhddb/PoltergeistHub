@@ -777,8 +777,6 @@ local NoclipToggle = PlayerTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Noclip has been activated"
             })
-            
-            local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
