@@ -521,7 +521,7 @@ end
 -- Auto skill check 2 Feature
 local SC2A = false
 local SC2 = GeneralTab:CreateButton({
-    Name = "🏓 Skill Check 2",
+    Name = "🏓 Auto Skill Check 2",
     Description = "Automatically completes skill checks",
     Callback = function()
         if SC2A then
