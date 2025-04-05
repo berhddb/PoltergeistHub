@@ -578,7 +578,48 @@ local FullBright = GeneralTab:CreateButton({
     end
 })
 
--- Fullbright when blackout
+local disFB = GeneralTab:CreateButton({
+    Name = "❌💡 Disable fullbright",
+    Description = "Disable the fullbright effect",
+    Callback = function()
+        if game.Lighting.Brightness == 2 then 
+            local Lighting = game:GetService("Lighting")
+            Lighting.Brightness = 3
+            Lighting.ClockTime = 0
+            Lighting.FogEnd = 250
+            Lighting.GlobalShadows = true
+            Lighting.OutdoorAmbient = Color3.fromRGB(0, 0, 0)
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright disabled"
+            })
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Fullbright is not activated"
+            })
+        end
+    end
+})
+
+
+local function fbwbodetect()
+    if workspace.Info.BlackOut.Value == true then
+        local Lighting = game:GetService("Lighting")
+        Lighting.Brightness = 2
+        Lighting.ClockTime = 14
+        Lighting.FogEnd = 100000
+        Lighting.GlobalShadows = false
+        Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+    end
+end
+
 local FBwBO = false
 local FBwBOToggle = GeneralTab:CreateToggle({
     Name = "🔦 Fullbright when blackout",
@@ -594,23 +635,12 @@ local FBwBOToggle = GeneralTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Fullbright when blackout has been activated"
             })
-            
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not FBwBO then 
-                    conn:Disconnect()
-                    return
+            coroutine.wrap(function()
+                while FBwBO do
+                    fbwbodetect()
+                    wait(1)
                 end
-                
-                local Lighting = game:GetService("Lighting")
-                if Lighting.Brightness ~= 2 then 
-                    Lighting.Brightness = 2
-                    Lighting.ClockTime = 14
-                    Lighting.FogEnd = 100000
-                    Lighting.GlobalShadows = false
-                    Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-                end
-            end)
+            end)()
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -622,6 +652,7 @@ local FBwBOToggle = GeneralTab:CreateToggle({
         end
     end
 })
+
 
 -- Auto GTE
 local AutoGTE = false
@@ -761,7 +792,6 @@ localPlayer.CharacterAdded:Connect(function()
     end
 end)
 
--- Noclip
 local Noclip = false
 local NoclipToggle = PlayerTab:CreateToggle({
     Name = "👻 Noclip",
@@ -777,6 +807,7 @@ local NoclipToggle = PlayerTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Noclip has been activated"
             })
+            local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
@@ -792,28 +823,15 @@ local NoclipToggle = PlayerTab:CreateToggle({
                     if partPosition.Y < playerPosition.Y - humanoidRootPart.Size.Y / 2 then
                         return
                     end
-                    
-                    part.CanCollide = false
-                    local noclipBool = Instance.new("BoolValue")
-                    noclipBool.Name = "NoclipBool"
-                    noclipBool.Parent = part
-                end
-            end
-            
-            local touchedConn = humanoidRootPart.Touched:Connect(onTouched)
-            
-            -- Cleanup when toggled off
-            NoclipToggle.Changed:Connect(function()
-                if not NoclipToggle.CurrentValue then
-                    touchedConn:Disconnect()
-                    for _, v in ipairs(workspace:GetDescendants()) do
-                        if v.Name == "NoclipBool" then
-                            v.Parent.CanCollide = true
-                            v:Destroy() 
-                        end
+                    if Noclip == true then
+                        local noclipBool = Instance.new("BoolValue")
+                        noclipBool.Name = "NoclipBool"
+                        noclipBool.Parent = part
+                        part.CanCollide = false
                     end
                 end
-            end)
+            end
+            humanoidRootPart.Touched:Connect(onTouched)
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -822,6 +840,13 @@ local NoclipToggle = PlayerTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Noclip has been deactivated"
             })
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "NoclipBool" then
+                    v.Parent.CanCollide = true
+                    Noclip = false
+                    v:Destroy() 
+                end
+            end
         end
     end
 })
