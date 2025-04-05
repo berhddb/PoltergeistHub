@@ -1285,7 +1285,7 @@ local IYscript = OthersTab:CreateButton({
 
 local ikHub = OthersTab:CreateButton({
     Name = "Iriska Hub",
-    Description = "Dandy's World script made by hex233222 (🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱🐱)",
+    Description = "Dandy's World script made by hex233222 (🐱🐱🐱🐱🐱🐱)",
     Callback = function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Dandy's-World-ALPHA-Zyra-Hub-24675"))()
         sound(8486683243)
