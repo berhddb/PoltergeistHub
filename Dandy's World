@@ -995,6 +995,45 @@ local JumpBTN = PlayerTab:CreateButton({
     end
 })
 
+-- Spin
+local Spin = false
+local SpinToggle = PlayerTab:CreateToggle({
+    Name = "🌀 Spin",
+    Description = "Makes you sPiNnNnNnNnNnNnNnNnNnN",
+    CurrentValue = false,
+    Callback = function(v)
+        Spin = v
+        if Spin then
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Spin has been activated"
+            })
+            local Spin = Instance.new("BodyAngularVelocity")
+	Spin.Name = "Spinning"
+	Spin.Parent = player.Character.HumanoidRootPart
+	Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+	Spin.AngularVelocity = Vector3.new(0,50,0)
+        
+        else
+            for i,v in pairs(player.Character.HumanoidRootPart:GetChildren()) do
+		if v.Name == "Spinning" then
+			v:Destroy()
+		end
+	end
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Spin has been deactivated"
+            })
+        end
+    end
+})
+
 -- Other Scripts
 local GDscript = OthersTab:CreateButton({
     Name = "G0bbyD0llan script",
