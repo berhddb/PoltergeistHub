@@ -904,7 +904,7 @@ local ntfriToggle = GeneralTab:CreateToggle({
 
 local GTGToggle = GeneralTab:CreateButton({
     Name = "⚙️ Go to a generator",
-    Description = "Makes you go to the nearest incomplete generator. (ACTIVATE NOCLIP TO USE THIS)",
+    Description = "Makes you go to the nearest incomplete generator. (You can use noclip for better results. Don't use that on the elevator.)",
     Callback = function()
         if TTG then
             sound(17208361335)
