@@ -470,13 +470,6 @@ local ASC2 = GeneralTab:CreateToggle({
         local virtualInputManager = game:GetService("VirtualInputManager")
         local player = game.Players.LocalPlayer
         local ScreenGui = player:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui")
-  sound(8486683243)
-        Poltergeist:Notification({ 
-            Title = "Notification",
-            Icon = "notifications_active",
-            ImageSource = "Material",
-            Content = "Auto Skill Check has been activated"
-        })
         -- Declarar conexión fuera de la función
         if not _G.connection then _G.connection = nil end
 
@@ -521,7 +514,13 @@ local ASC2 = GeneralTab:CreateToggle({
         end
         -- Si el toggle está activado
         if state then
-            print("Auto Click activado.")
+             sound(8486683243)
+        Poltergeist:Notification({ 
+            Title = "Notification",
+            Icon = "notifications_active",
+            ImageSource = "Material",
+            Content = "Auto Skill Check has been activated"
+        })
             -- Asegurarse de que no haya conexiones previas
             if _G.connection then
                 _G.connection:Disconnect()
