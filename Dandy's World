@@ -1142,32 +1142,48 @@ local StopTweensBtn = GeneralTab:CreateButton({
 })
 
 
+-- Player Tab Features
+local tpWalking = false
+local localPlayer = game:GetService("Players").LocalPlayer
+
+local function StartTeleportWalk(speedMultiplier)
+    tpWalking = true
+    
+    local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    
+    local conn
+    conn = game:GetService("RunService").Heartbeat:Connect(function()
+        if not tpWalking or not character or not humanoid or not humanoid.Parent then 
+            conn:Disconnect()
+            return
+        end
+        
+        local delta = game:GetService("RunService").Heartbeat:Wait()
+        if humanoid.MoveDirection.Magnitude > 0 then
+            character:TranslateBy(humanoid.MoveDirection * speedMultiplier * delta * 10)
+        end
+    end)
+end
 
 local function StopTeleportWalk()
     tpWalking = false
-    if tpWalkingConnection then
-        tpWalkingConnection:Disconnect()
-        tpWalkingConnection = nil
-    end
 end
 
--- Slider para velocidade
 local TpWalkSpeedSlider = PlayerTab:CreateSlider({
     Name = "Teleport Walk Speed",
     Description = "Adjust movement speed multiplier",
     Range = {0.1, 5},
     Increment = 0.1,
-    CurrentValue = TpWalkSpeed,
+    CurrentValue = 0.5,
     Callback = function(Value)
-        TpWalkSpeed = Value
         if TpWalkToggle and TpWalkToggle.CurrentValue then
             StopTeleportWalk()
-            StartTeleportWalk()
+            StartTeleportWalk(Value)
         end
     end
 })
 
--- Toggle para ativar/desativar o modo
 local TpWalkToggle = PlayerTab:CreateToggle({
     Name = "🚀 Teleport Walk",
     Description = "Enhanced movement speed",
@@ -1181,7 +1197,7 @@ local TpWalkToggle = PlayerTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Teleport Walk activated"
             })
-            StartTeleportWalk()
+            StartTeleportWalk(TpWalkSpeedSlider.CurrentValue)
         else
             sound(17208361335)
             Poltergeist:Notification({
@@ -1195,12 +1211,11 @@ local TpWalkToggle = PlayerTab:CreateToggle({
     end
 })
 
--- Reativar ao morrer/respawnar
-player.CharacterAdded:Connect(function()
+localPlayer.CharacterAdded:Connect(function()
     if TpWalkToggle and TpWalkToggle.CurrentValue then
         StopTeleportWalk()
         task.wait(0.5)
-        StartTeleportWalk()
+        StartTeleportWalk(TpWalkSpeedSlider.CurrentValue)
     end
 end)
 
