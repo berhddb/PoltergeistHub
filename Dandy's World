@@ -1,9 +1,20 @@
+print("Loading Poltergeist Hub (Dandy's World) v.1.0.4")
 -- Dandy's World
 local TpWalkSpeed = 0.5
-local ttg = false
 local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
 local VirtualInputManager = game:GetService('VirtualInputManager')
 local player = game.Players.LocalPlayer
+
+-- Configuration
+-- Generator esp
+local GeneratorEspColor = 0,255,0
+local ShowGeneratorAmount = false
+-- Twisted esp
+local TwistedEspColor = 255,0,0
+-- Item esp
+local ItemEspColor = 255, 215, 0
+-- Player esp
+local PlayerEspColor = 0,0,255
 
 -- Sound function
 local function sound(id)
@@ -92,18 +103,43 @@ local function createESP(object, name, color, offset)
     return highlight, billboard
 end
 
-local function updateDistanceESP(object, name)
-    if not object or not object:FindFirstChild(name.."ESP") then return end
-    
-    local root = object:FindFirstChild("HumanoidRootPart") or object:FindFirstChild("Main") or object.PrimaryPart
-    if not root then return end
-    
-    local localHead = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head")
-    if not localHead then return end
-    
-    local dist = (localHead.Position - root.Position).Magnitude
-    object[name.."ESP"].TextLabel.Text = string.format("%s [%.1fm]", name, dist)
+local function updateDistanceESP(object, name, type)
+    if not object then return end
+    local stats = object:FindFirstChild("Stats")
+    local billboard = object:FindFirstChild(name.."ESP")
+    local highlight = object:FindFirstChild(name.."Highlight")
+    local label = billboard and billboard:FindFirstChildOfClass("TextLabel")
+    -- Escolhe a cor correta por tipo de objeto
+    local color
+    if type == "Generator" then
+        color = GeneratorEspColor
+    elseif type == "Twisted" then
+        color = TwistedEspColor
+    elseif type == "Player" then
+        color = PlayerEspColor
+    elseif type == "Item" then
+        color = ItemEspColor
+    else
+        color = Color3.fromRGB(255, 255, 255)
+    end
+    -- Atualiza texto e cor
+    if label then
+        label.TextColor3 = color
+        if name == "Generator" and ShowGeneratorAmount and stats and stats:FindFirstChild("CurrentAmount") then
+            label.Text = "Amount: " .. tostring(stats.CurrentAmount.Value) .. "%"
+        elseif name ~= "Generator" then
+            label.Text = name
+        else
+            label.Text = ""
+        end
+    end
+
+    if highlight then
+        highlight.FillColor = color
+    end
 end
+
+
 
 -- Generator ESP System
 local GeneratorESP = false
@@ -116,16 +152,15 @@ local function UpdateGeneratorESP()
                 local stats = obj:FindFirstChild("Stats")
                 if stats and stats:FindFirstChild("Completed") then
                     if not stats.Completed.Value and not generatorCache[obj] then
-                        createESP(obj, "Generator", Color3.fromRGB(0, 255, 0))
+                        createESP(obj, "Generator", GeneratorEspColor)
                         generatorCache[obj] = true
                     elseif stats.Completed.Value and generatorCache[obj] then
                         if obj:FindFirstChild("GeneratorHighlight") then obj.GeneratorHighlight:Destroy() end
                         if obj:FindFirstChild("GeneratorESP") then obj.GeneratorESP:Destroy() end
                         generatorCache[obj] = nil
                     end
-                    
                     if generatorCache[obj] then
-                        updateDistanceESP(obj, "Generator")
+                        updateDistanceESP(obj, "Generator", "Generator")
                     end
                 end
             end)
@@ -157,15 +192,14 @@ local GeneratorESPToggle = VisualTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Generator ESP has been activated"
             })
-            
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not GeneratorESP then 
-                    conn:Disconnect()
-                    return
-                end
-                UpdateGeneratorESP()
-            end)
+         coroutine.wrap(function()
+    while GeneratorESP do
+        UpdateGeneratorESP()
+        task.wait(0.3) -- espera entre atualizações (ajuste como quiser)
+    end
+end)()
+
+
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -193,7 +227,7 @@ local function UpdateTwistedESP()
         end
         
         if twistedCache[obj] then
-            updateDistanceESP(obj, obj.Name)
+            updateDistanceESP(obj, obj.Name, "Twisted")
         end
     end
 end
@@ -223,14 +257,13 @@ local TwistedESPToggle = VisualTab:CreateToggle({
                 Content = "Twisted ESP has been activated"
             })
             
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not TwistedESP then 
-                    conn:Disconnect()
-                    return
-                end
-                UpdateTwistedESP()
-            end)
+           coroutine.wrap(function()
+    while TwistedESP do
+        UpdateTwistedESP()
+        task.wait(0.3)
+    end
+end)()
+
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -278,7 +311,7 @@ local function UpdateItemESP()
         end
         
         if itemCache[obj] then
-            updateDistanceESP(obj, obj.Name)
+            updateDistanceESP(obj, obj.Name, "Item")
         end
     end
 end
@@ -308,14 +341,13 @@ local ItemEspToggle = VisualTab:CreateToggle({
                 Content = "Item ESP has been activated"
             })
             
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not ItemESP then 
-                    conn:Disconnect()
-                    return
-                end
-                UpdateItemESP()
-            end)
+            coroutine.wrap(function()
+    while ItemESP do
+        UpdateItemESP()
+        task.wait(0.3)
+    end
+end)()
+
         else
             CleanUpItemESP()
             sound(17208361335)
@@ -342,7 +374,7 @@ local function UpdatePlayerEsp()
             end)
         end
         if playerCache[player] and player.Character then
-            updateDistanceESP(player.Character, player.Name)
+            updateDistanceESP(player.Character, player.Name, "Player")
         end
     end
 end
@@ -374,14 +406,13 @@ local PlayerEspToggle = VisualTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Player ESP has been activated"
             }) 
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not PlayerEsp then 
-                    conn:Disconnect()
-                    return
-                end
-                UpdatePlayerEsp()
-            end)
+           coroutine.wrap(function()
+    while PlayerEsp do
+        UpdatePlayerEsp()
+        task.wait(0.3)
+    end
+end)()
+
         else
             sound(17208361335)
             Poltergeist:Notification({ 
@@ -876,31 +907,111 @@ local ntfriToggle = GeneralTab:CreateToggle({
     end
 })
 
-  local function GettingChased()
-                local currentRoom = game.Workspace:FindFirstChild("CurrentRoom")
-                if not currentRoom then return false end
+local function GettingChased()
+    local currentRoom = game.Workspace:FindFirstChild("CurrentRoom")
+    if not currentRoom then return false end
 
-                for _, child in ipairs(currentRoom:GetChildren()) do
-                    if child:IsA("Model") then
-                        local monstersContainer = child:FindFirstChild("Monsters")
-                        if monstersContainer then
-                            for _, monster in ipairs(monstersContainer:GetChildren()) do
-                                local chasingValue = monster:FindFirstChild("ChasingValue")
-                                if chasingValue and chasingValue:IsA("ObjectValue") then
-                                    local player = game.Players.LocalPlayer
-                                    if chasingValue.Value == player or chasingValue.Value == player.Character then
-                                        return true
-                                    end
-                                end
-                            end
+    for _, child in ipairs(currentRoom:GetChildren()) do
+        if child:IsA("Model") then
+            local monstersContainer = child:FindFirstChild("Monsters")
+            if monstersContainer then
+                for _, monster in ipairs(monstersContainer:GetChildren()) do
+                    local chasingValue = monster:FindFirstChild("ChasingValue")
+                    if chasingValue and chasingValue:IsA("ObjectValue") then
+                        local player = game.Players.LocalPlayer
+                        if chasingValue.Value == player or chasingValue.Value == player.Character then
+                            return true
                         end
                     end
                 end
-                return false
             end
+        end
+    end
+    return false
+end
 
+-- Variáveis globais
+local TTG = false
+local GTI = false
+local AutoGTG = false
+local ActiveTweens = {}
+local StopTweensFlag = false
 
+local TweenService = game:GetService("TweenService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
 
+local function safeFind(instance, child)
+    return instance and instance:FindFirstChild(child)
+end
+
+local function safePosition(part)
+    return part and part:IsA("BasePart") and part.Position or nil
+end
+
+local function getHumanoidRootPart()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    return character:FindFirstChild("HumanoidRootPart")
+end
+
+local function getClosestGenerator()
+    local cr = workspace:FindFirstChild("CurrentRoom")
+    local room = cr and cr:FindFirstChildWhichIsA("Model")
+    local generators = room and safeFind(room, "Generators")
+    local list = generators and generators:GetChildren() or {}
+
+    local hrp = getHumanoidRootPart()
+    if not hrp then return nil end
+    
+    local closest, minDist
+
+    for _, g in ipairs(list) do
+        local stats = safeFind(g, "Stats")
+        local completed = stats and safeFind(stats, "Completed")
+        local active = stats and safeFind(stats, "ActivePlayer")
+        local prompt = safeFind(g, "Prompt")
+
+        if completed and not completed.Value and prompt and safePosition(prompt) then
+            if not active or active.Value == nil or active.Value == game.Players.LocalPlayer.Name then
+                local dist = (hrp.Position - prompt.Position).Magnitude
+                if not minDist or dist < minDist then
+                    closest, minDist = g, dist
+                end
+            end
+        end
+    end
+
+    return closest
+end
+
+local function moveToPrompt(prompt)
+    local hrp = getHumanoidRootPart()
+    if not hrp or not prompt or not prompt:IsA("BasePart") then return end
+
+    local dist = (hrp.Position - prompt.Position).Magnitude
+    local tween = TweenService:Create(hrp, TweenInfo.new(dist * 0.05, Enum.EasingStyle.Linear), {
+        CFrame = prompt.CFrame + Vector3.new(0, 0, -2)
+    })
+
+    table.insert(ActiveTweens, tween)
+    tween:Play()
+
+    tween.Completed:Connect(function()
+        if not StopTweensFlag and not GettingChased() then
+            task.wait(0.3)
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+            task.wait(0.1)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+        end
+
+        for i, t in ipairs(ActiveTweens) do
+            if t == tween then
+                table.remove(ActiveTweens, i)
+                break
+            end
+        end
+    end)
+end
 
 local GTGToggle = GeneralTab:CreateButton({
     Name = "⚙️ Go to a generator",
@@ -935,7 +1046,8 @@ local GTGToggle = GeneralTab:CreateButton({
                     local stats = generator:FindFirstChild("Stats")
                     if stats then
                         local completed = stats:FindFirstChild("Completed")
-                        if completed and not completed.Value then
+                        local active = stats:FindFirstChild("ActivePlayer")
+                        if completed and not completed.Value and (not active or active.Value == nil) then
                             table.insert(incompleteGenerators, generator)
                         end
                     end
@@ -958,27 +1070,32 @@ local GTGToggle = GeneralTab:CreateButton({
                         local distance = (humanoidRootPart.Position - promptPart.Position).Magnitude
                         local duration = distance * 0.05 -- Quanto maior a distância, mais devagar
                         print("Nearest generator distance:", math.floor(distance), " | Duration:", string.format("%.2f", duration))
-                        local tweenInfo = TweenInfo.new(
-                            duration,
-                            Enum.EasingStyle.Linear
-                        )
+                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
                         local goal = {
                             CFrame = promptPart.CFrame + Vector3.new(0, 0, -2)
                         }
                         local tween = TweenService:Create(humanoidRootPart, tweenInfo, goal)
+                        table.insert(ActiveTweens, tween) -- Adiciona à lista de tweens ativos
                         tween:Play()
                         tween.Completed:Connect(function()
-			if not GettingChased() then
-                            task.wait(0.3)
-                            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-                            task.wait(0.1)
-                            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-			    end
-       TTG = false
+                            -- Remove tween da lista
+                            for i, t in ipairs(ActiveTweens) do
+                                if t == tween then
+                                    table.remove(ActiveTweens, i)
+                                    break
+                                end
+                            end
+                            if not GettingChased() then
+                                task.wait(0.3)
+                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                                task.wait(0.1)
+                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+                            end
+                            TTG = false
                         end)
                     end
                 else
-                    GTG = false
+                    TTG = false
                     Poltergeist:Notification({
                         Title = "Notification",
                         Icon = "info",
@@ -998,35 +1115,32 @@ local GTGToggle = GeneralTab:CreateButton({
     end
 })
 
+-- Botão para parar tweens
+local StopTweensBtn = GeneralTab:CreateButton({
+    Name = "⛔ Stop Active Tweens",
+    Description = "Immediately stops all active movement tweens",
+    Callback = function()
+        StopTweensFlag = true
+        
+        -- Cancela todos os tweens ativos
+        for _, tween in pairs(ActiveTweens) do
+            pcall(function() tween:Cancel() end)
+        end
+        ActiveTweens = {}  -- Limpa a tabela de tweens ativos
 
-
--- Player Tab Features
-local tpWalking = false
-local localPlayer = game:GetService("Players").LocalPlayer
-local RunService = game:GetService("RunService")
-
-local function StartTeleportWalk()
-    tpWalking = true
-
-    local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-
-    -- Desconecta anterior se houver
-    if tpWalkingConnection then
-        tpWalkingConnection:Disconnect()
+        -- Notificação de que todos os tweens foram parados
+        sound(17208361335)
+        Poltergeist:Notification({
+            Title = "Notification",
+            Icon = "notifications_active",
+            ImageSource = "Material",
+            Content = "All active tweens have been stopped"
+        })
+        
+        StopTweensFlag = false
     end
+})
 
-    tpWalkingConnection = RunService.Heartbeat:Connect(function(deltaTime)
-        if not tpWalking or not character or not humanoid or not humanoid.Parent then
-            tpWalkingConnection:Disconnect()
-            return
-        end
-
-        if humanoid.MoveDirection.Magnitude > 0 then
-            character:TranslateBy(humanoid.MoveDirection * TpWalkSpeed * deltaTime * 10)
-        end
-    end)
-end
 
 
 local function StopTeleportWalk()
@@ -1082,7 +1196,7 @@ local TpWalkToggle = PlayerTab:CreateToggle({
 })
 
 -- Reativar ao morrer/respawnar
-localPlayer.CharacterAdded:Connect(function()
+player.CharacterAdded:Connect(function()
     if TpWalkToggle and TpWalkToggle.CurrentValue then
         StopTeleportWalk()
         task.wait(0.5)
@@ -1352,6 +1466,7 @@ local JumpBTN = PlayerTab:CreateButton({
         })
     end
 })
+
 -- Spin
 local Spin = false
 local SpinToggle = PlayerTab:CreateToggle({
@@ -1412,6 +1527,75 @@ local MZD = PlayerTab:CreateSlider({
      player.CameraMaxZoomDistance = Value
     end
 })
+OthersTab:CreateSection("Config")
+
+OthersTab:CreateSection("Generator ESP")
+local GeneratorEspColorPicker = OthersTab:CreateColorPicker({
+    Name = "🖋 Generator ESP color",
+    Color = Color3.fromRGB(0, 255, 0),
+    Flag = "generatorespcolor",
+    Callback = function(Value)
+    GeneratorEspColor = Value
+    end
+}, "generatorespcolor")
+
+local ShowAmount = false
+local ShowAmountToggle = OthersTab:CreateToggle({
+    Name = "📉 Show generator amount",
+    Description = "Shows the amount of the generator",
+    CurrentValue = false,
+    Callback = function(v)
+        ShowDistance = v
+        if ShowDistance then
+            sound(8486683243)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Now the ESP shows the amount."
+            })
+          ShowGeneratorAmount = true 
+        else
+            sound(17208361335)
+            Poltergeist:Notification({ 
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Now the ESP hide the amount."
+		
+            })
+	    ShowGeneratorAmount = false
+        end
+    end
+})
+OthersTab:CreateSection("Twisted ESP")
+local TwistedEspColorPicker = OthersTab:CreateColorPicker({
+    Name = "🖋 Twisted ESP color",
+    Color = Color3.fromRGB(255, 0, 0),
+    Flag = "twistedespcolor",
+    Callback = function(Value)
+    TwistedEspColor = Value
+    end
+}, "twistedespcolor")
+OthersTab:CreateSection("Item ESP")
+local TwistedEspColorPicker = OthersTab:CreateColorPicker({
+    Name = "🖋 Item ESP color",
+    Color = Color3.fromRGB(255, 215, 0),
+    Flag = "itemespcolor",
+    Callback = function(Value)
+    ItemEspColor = Value
+    end
+}, "itemespcolor")
+OthersTab:CreateSection("Player ESP")
+local TwistedEspColorPicker = OthersTab:CreateColorPicker({
+    Name = "🖋 Player ESP color",
+    Color = Color3.fromRGB(0, 0, 255),
+    Flag = "playerespcolor",
+    Callback = function(Value)
+    PlayerEspColor = Value
+    end
+}, "playerespcolor")
+OthersTab:CreateSection("Other Hubs")
 
 -- Other Scripts
 local GDscript = OthersTab:CreateButton({
@@ -1463,7 +1647,7 @@ local IYscript = OthersTab:CreateButton({
     Name = "Infinite Yield",
     Description = "Loads Infinite Yield (great universal script)",
     Callback = function()
-   loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
         sound(8486683243)
         Poltergeist:Notification({ 
             Title = "Notification",
@@ -1478,7 +1662,7 @@ local ikHub = OthersTab:CreateButton({
     Name = "Iriska Hub",
     Description = "Dandy's World script made by hex233222 (🐱🐱🐱🐱🐱🐱)",
     Callback = function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Dandy's-World-ALPHA-Zyra-Hub-24675"))()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Dandy's-World-ALPHA-Zyra-Hub-24675"))()
         sound(8486683243)
         Poltergeist:Notification({ 
             Title = "Notification",
