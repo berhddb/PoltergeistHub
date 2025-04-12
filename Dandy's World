@@ -31,14 +31,14 @@ end
 -- Create main window
 local Window = Poltergeist:CreateWindow({
     Name = "Poltergeist Hub",
-    Subtitle = "Universal",
+    Subtitle = "Dandy's World",
     LogoID = "101636243364181",
     LoadingEnabled = true,
     LoadingTitle = "Poltergeist Hub", 
     LoadingSubtitle = "V1.0 (BETA)",
     ConfigSettings = {
         RootFolder = "PoltergeistHubDW",
-        ConfigFolder = "PoltergeistHubUniversal"
+        ConfigFolder = "PoltergeistHub"
     },
     KeySystem = false
 })
