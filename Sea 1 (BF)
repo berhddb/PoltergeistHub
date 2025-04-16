@@ -1,0 +1,286 @@
+-- Poltergeist
+local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
+local v14 = Poltergeist
+
+local Window = Poltergeist:CreateWindow({
+	Name = "Poltergeist Hub", -- Este é o título da sua janela
+	Subtitle = "Universal", -- Um subtítulo cinza ao lado do título principal
+	LogoID = nil, -- O ID do ativo para o seu logo. Defina como nil se não tiver um logo para o Luna usar
+	LoadingEnabled = true, -- Ativa a animação de carregamento. Defina como false se não quiser a tela de carregamento ou tiver uma personalizada
+	LoadingTitle = "Poltergeist Hub", -- Cabeçalho da tela de carregamento
+	LoadingSubtitle = "V0 (In-Dev)", -- Subtítulo da tela de carregamento
+
+	ConfigSettings = {
+		RootFolder = "PoltergeistHub", -- A pasta raiz é apenas para hubs com vários scripts de jogo e pode ser removida. NÃO ADICIONE UMA BARRA
+		ConfigFolder = "PoltergeistHubUniversal" -- O nome da pasta onde o Luna armazenará as configurações para este script. NÃO ADICIONE UMA BARRA
+	},
+
+	KeySystem = false, -- A partir da versão Beta 6, Luna implementou oficialmente um sistema de chave!
+	KeySettings = {
+		Title = "Poltergeist Example Key", -- Título do sistema de chave
+		Subtitle = "Key System", -- Subtítulo do sistema de chave
+		Note = "Melhor sistema de chave! Use um sistema HWID como Pelican, Luarmor etc., que fornecem chaves baseadas no HWID, pois colocar uma string simples é fácil de burlar",
+		SaveInRoot = false, -- Ativar irá salvar a chave na sua RootFolder (VOCÊ PRECISA TER UMA ANTES DE ATIVAR ESTA OPÇÃO)
+		SaveKey = true, -- A chave do usuário será salva, mas se você mudar a chave, eles não poderão usar seu script
+		Key = {"Example Key"}, -- Lista de chaves aceitas pelo sistema, por favor use um sistema como Pelican ou Luarmor que fornecem chaves baseadas no HWID, pois colocar uma string simples é fácil de burlar
+		SecondAction = {
+			Enabled = true, -- Defina como false se não quiser uma segunda ação
+			Type = "c5mZwdzbHx", -- Link / Discord
+			Parameter = "" -- Se o tipo for Discord, coloque o link de convite (NÃO COLOQUE DISCORD.GG/). Caso contrário, coloque o link completo do seu sistema de chave aqui
+		}
+	}
+})
+
+-- Tabs
+
+local MainTab = Window:CreateTab({
+    Name = "Main Tab",
+    Icon = "calendar_today",
+    ImageSource = "Material",
+    ShowTitle = true
+})
+-- Level detect
+
+function CheckLevel()
+    local Level = game:GetService("Players").LocalPlayer.Data.Level.Value;
+        if ((Level == 1) or (Level <= 9) or (SelectMonster == "Bandit")) then
+            Ms = "Bandit";
+            NameQuest = "BanditQuest1";
+            QuestLv = 1;
+            NameMon = "Bandit";
+            CFrameQ = CFrame.new(1060.9383544922, 16.455066680908, 1547.7841796875);
+            CFrameMon = CFrame.new(1038.5533447266, 41.296249389648, 1576.5098876953);
+        elseif ((Level == 10) or (Level <= 14) or (SelectMonster == "Monkey")) then
+            Ms = "Monkey";
+            NameQuest = "JungleQuest";
+            QuestLv = 1;
+            NameMon = "Monkey";
+            CFrameQ = CFrame.new(- 1601.6553955078, 36.85213470459, 153.38809204102);
+            CFrameMon = CFrame.new(- 1448.1446533203, 50.851993560791, 63.60718536377);
+        elseif ((Level == 15) or (Level <= 29) or (SelectMonster == "Gorilla")) then
+            Ms = "Gorilla";
+            NameQuest = "JungleQuest";
+            QuestLv = 2;
+            NameMon = "Gorilla";
+            CFrameQ = CFrame.new(- 1601.6553955078, 36.85213470459, 153.38809204102);
+            CFrameMon = CFrame.new(- 1142.6488037109, 40.462348937988, - 515.39227294922);
+        elseif ((Level == 30) or (Level <= 39) or (SelectMonster == "Pirate")) then
+            Ms = "Pirate";
+            NameQuest = "BuggyQuest1";
+            QuestLv = 1;
+            NameMon = "Pirate";
+            CFrameQ = CFrame.new(- 1140.1761474609, 4.752049446106, 3827.4057617188);
+            CFrameMon = CFrame.new(- 1201.0881347656, 40.628940582275, 3857.5966796875);
+        elseif ((Level == 40) or (Level <= 59) or (SelectMonster == "Brute")) then
+            Ms = "Brute";
+            NameQuest = "BuggyQuest1";
+            QuestLv = 2;
+            NameMon = "Brute";
+            CFrameQ = CFrame.new(- 1140.1761474609, 4.752049446106, 3827.4057617188);
+            CFrameMon = CFrame.new(- 1387.5324707031, 24.592035293579, 4100.9575195313);
+        elseif ((Level == 60) or (Level <= 74) or (SelectMonster == "Desert Bandit")) then
+            Ms = "Desert Bandit";
+            NameQuest = "DesertQuest";
+            QuestLv = 1;
+            NameMon = "Desert Bandit";
+            CFrameQ = CFrame.new(896.51721191406, 6.4384617805481, 4390.1494140625);
+            CFrameMon = CFrame.new(984.99896240234, 16.109552383423, 4417.91015625);
+        elseif ((Level == 75) or (Level <= 89) or (SelectMonster == "Desert Officer")) then
+            Ms = "Desert Officer";
+            NameQuest = "DesertQuest";
+            QuestLv = 2;
+            NameMon = "Desert Officer";
+            CFrameQ = CFrame.new(896.51721191406, 6.4384617805481, 4390.1494140625);
+            CFrameMon = CFrame.new(1547.1510009766, 14.452038764954, 4381.8002929688);
+        elseif ((Level == 90) or (Level <= 99) or (SelectMonster == "Snow Bandit")) then
+            Ms = "Snow Bandit";
+            NameQuest = "SnowQuest";
+            QuestLv = 1;
+            NameMon = "Snow Bandit";
+            CFrameQ = CFrame.new(1386.8073730469, 87.272789001465, - 1298.3576660156);
+            CFrameMon = CFrame.new(1356.3028564453, 105.76865386963, - 1328.2418212891);
+        elseif ((Level == 100) or (Level <= 119) or (SelectMonster == "Snowman")) then
+            Ms = "Snowman";
+            NameQuest = "SnowQuest";
+            QuestLv = 2;
+            NameMon = "Snowman";
+            CFrameQ = CFrame.new(1386.8073730469, 87.272789001465, - 1298.3576660156);
+            CFrameMon = CFrame.new(1218.7956542969, 138.01184082031, - 1488.0262451172);
+        elseif ((Level == 120) or (Level <= 149) or (SelectMonster == "Chief Petty Officer")) then
+            Ms = "Chief Petty Officer";
+            NameQuest = "MarineQuest2";
+            QuestLv = 1;
+            NameMon = "Chief Petty Officer";
+            CFrameQ = CFrame.new(- 5035.49609375, 28.677835464478, 4324.1840820313);
+            CFrameMon = CFrame.new(- 4931.1552734375, 65.793113708496, 4121.8393554688);
+        elseif ((Level == 150) or (Level <= 174) or (SelectMonster == "Sky Bandit")) then
+            Ms = "Sky Bandit";
+            NameQuest = "SkyQuest";
+            QuestLv = 1;
+            NameMon = "Sky Bandit";
+            CFrameQ = CFrame.new(- 4842.1372070313, 717.69543457031, - 2623.0483398438);
+            CFrameMon = CFrame.new(- 4955.6411132813, 365.46365356445, - 2908.1865234375);
+        elseif ((Level == 175) or (Level <= 189) or (SelectMonster == "Dark Master")) then
+            Ms = "Dark Master";
+            NameQuest = "SkyQuest";
+            QuestLv = 2;
+            NameMon = "Dark Master";
+            CFrameQ = CFrame.new(- 4842.1372070313, 717.69543457031, - 2623.0483398438);
+            CFrameMon = CFrame.new(- 5148.1650390625, 439.04571533203, - 2332.9611816406);
+        elseif ((Level == 190) or (Level <= 209) or (SelectMonster == "Prisoner")) then
+            Ms = "Prisoner";
+            NameQuest = "PrisonerQuest";
+            QuestLv = 1;
+            NameMon = "Prisoner";
+            CFrameQ = CFrame.new(5310.60547, 0.350014925, 474.946594, 0.0175017118, 0, 0.999846935, 0, 1, 0, - 0.999846935, 0, 0.0175017118);
+            CFrameMon = CFrame.new(4937.31885, 0.332031399, 649.574524, 0.694649816, 0, - 0.719348073, 0, 1, 0, 0.719348073, 0, 0.694649816);
+        elseif ((Level == 210) or (Level <= 249) or (SelectMonster == "Dangerous Prisoner")) then
+            Ms = "Dangerous Prisoner";
+            NameQuest = "PrisonerQuest";
+            QuestLv = 2;
+            NameMon = "Dangerous Prisoner";
+            CFrameQ = CFrame.new(5310.60547, 0.350014925, 474.946594, 0.0175017118, 0, 0.999846935, 0, 1, 0, - 0.999846935, 0, 0.0175017118);
+            CFrameMon = CFrame.new(5099.6626, 0.351562679, 1055.7583, 0.898906827, 0, - 0.438139856, 0, 1, 0, 0.438139856, 0, 0.898906827);
+        elseif ((Level == 250) or (Level <= 274) or (SelectMonster == "Toga Warrior")) then
+            Ms = "Toga Warrior";
+            NameQuest = "ColosseumQuest";
+            QuestLv = 1;
+            NameMon = "Toga Warrior";
+            CFrameQ = CFrame.new(- 1577.7890625, 7.4151420593262, - 2984.4838867188);
+            CFrameMon = CFrame.new(- 1872.5166015625, 49.080215454102, - 2913.810546875);
+        elseif ((Level == 275) or (Level <= 299) or (SelectMonster == "Gladiator")) then
+            Ms = "Gladiator";
+            NameQuest = "ColosseumQuest";
+            QuestLv = 2;
+            NameMon = "Gladiator";
+            CFrameQ = CFrame.new(- 1577.7890625, 7.4151420593262, - 2984.4838867188);
+            CFrameMon = CFrame.new(- 1521.3740234375, 81.203170776367, - 3066.3139648438);
+        elseif ((Level == 300) or (Level <= 324) or (SelectMonster == "Military Soldier")) then
+            Ms = "Military Soldier";
+            NameQuest = "MagmaQuest";
+            QuestLv = 1;
+            NameMon = "Military Soldier";
+            CFrameQ = CFrame.new(- 5316.1157226563, 12.262831687927, 8517.00390625);
+            CFrameMon = CFrame.new(- 5369.0004882813, 61.24352645874, 8556.4921875);
+        elseif ((Level == 325) or (Level <= 374) or (SelectMonster == "Military Spy")) then
+            Ms = "Military Spy";
+            NameQuest = "MagmaQuest";
+            QuestLv = 2;
+            NameMon = "Military Spy";
+            CFrameQ = CFrame.new(- 5316.1157226563, 12.262831687927, 8517.00390625);
+            CFrameMon = CFrame.new(- 5787.00293, 75.8262634, 8651.69922, 0.838590562, 0, - 0.544762194, 0, 1, 0, 0.544762194, 0, 0.838590562);
+        elseif ((Level == 375) or (Level <= 399) or (SelectMonster == "Fishman Warrior")) then
+            Ms = "Fishman Warrior";
+            NameQuest = "FishmanQuest";
+            QuestLv = 1;
+            NameMon = "Fishman Warrior";
+            CFrameQ = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734);
+            CFrameMon = CFrame.new(60844.10546875, 98.462875366211, 1298.3985595703);
+            if (_G.AutoLevel and ((CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000)) then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(61163.8515625, 11.6796875, 1819.7841796875));
+            end
+        elseif ((Level == 400) or (Level <= 449) or (SelectMonster == "Fishman Commando")) then
+            Ms = "Fishman Commando";
+            NameQuest = "FishmanQuest";
+            QuestLv = 2;
+            NameMon = "Fishman Commando";
+            CFrameQ = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734);
+            CFrameMon = CFrame.new(61738.3984375, 64.207321166992, 1433.8375244141);
+            if (_G.AutoLevel and ((CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000)) then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(61163.8515625, 11.6796875, 1819.7841796875));
+            end
+        elseif ((Level == 10) or (Level <= 474) or (SelectMonster == "God's Guard")) then
+            Ms = "God's Guard";
+            NameQuest = "SkyExp1Quest";
+            QuestLv = 1;
+            NameMon = "God's Guard";
+            CFrameQ = CFrame.new(- 4721.8603515625, 845.30297851563, - 1953.8489990234);
+            CFrameMon = CFrame.new(- 4628.0498046875, 866.92877197266, - 1931.2352294922);
+            if (_G.AutoLevel and ((CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000)) then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(- 4607.82275, 872.54248, - 1667.55688));
+            end
+        elseif ((Level == 475) or (Level <= 524) or (SelectMonster == "Shanda")) then
+            Ms = "Shanda";
+            NameQuest = "SkyExp1Quest";
+            QuestLv = 2;
+            NameMon = "Shanda";
+            CFrameQ = CFrame.new(- 7863.1596679688, 5545.5190429688, - 378.42266845703);
+            CFrameMon = CFrame.new(- 7685.1474609375, 5601.0751953125, - 441.38876342773);
+            if (_G.AutoLevel and ((CFrameMon.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 3000)) then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(- 7894.6176757813, 5547.1416015625, - 380.29119873047));
+            end
+        elseif ((Level == 525) or (Level <= 549) or (SelectMonster == "Royal Squad")) then
+            Ms = "Royal Squad";
+            NameQuest = "SkyExp2Quest";
+            QuestLv = 1;
+            NameMon = "Royal Squad";
+            CFrameQ = CFrame.new(- 7903.3828125, 5635.9897460938, - 1410.923828125);
+            CFrameMon = CFrame.new(- 7654.2514648438, 5637.1079101563, - 1407.7550048828);
+        elseif ((Level == 550) or (Level <= 624) or (SelectMonster == "Royal Soldier")) then
+            Ms = "Royal Soldier";
+            NameQuest = "SkyExp2Quest";
+            QuestLv = 2;
+            NameMon = "Royal Soldier";
+            CFrameQ = CFrame.new(- 7903.3828125, 5635.9897460938, - 1410.923828125);
+            CFrameMon = CFrame.new(- 7760.4106445313, 5679.9077148438, - 1884.8112792969);
+        elseif ((Level == 625) or (Level <= 649) or (SelectMonster == "Galley Pirate")) then
+            Ms = "Galley Pirate";
+            NameQuest = "FountainQuest";
+            QuestLv = 1;
+            NameMon = "Galley Pirate";
+            CFrameQ = CFrame.new(5258.2788085938, 38.526931762695, 4050.044921875);
+            CFrameMon = CFrame.new(5557.1684570313, 152.32717895508, 3998.7758789063);
+        elseif ((Level >= 650) or (SelectMonster == "Galley Captain")) then
+            Ms = "Galley Captain";
+            NameQuest = "FountainQuest";
+            QuestLv = 2;
+            NameMon = "Galley Captain";
+            CFrameQ = CFrame.new(5258.2788085938, 38.526931762695, 4050.044921875);
+            CFrameMon = CFrame.new(5677.6772460938, 92.786109924316, 4966.6323242188);
+        end
+
+-- Main Tab content
+
+local WeaponDropdown = MainTab:CreateDropdown({
+    Name = "Weapon",
+        Description = "The weapon that will be used",
+    Options = {"Melee","Sword", "Blox Fruit"},
+        CurrentOption = {"Melee"},
+        MultipleOptions = false,
+        SpecialType = nil,
+        Callback = function(Options)
+             if (Options == "Melee") then
+                for i, p in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if (p.ToolTip == "Melee") then
+                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(p.Name)) then
+                            SelectedWeapon = p.Name;
+                        end
+                    end
+                end
+            elseif (Options == "Sword") then
+                for j, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if (v.ToolTip == "Sword") then
+                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(v.Name)) then
+                            SelectedWeapon = v.Name;
+                        end
+                    end
+                end
+            elseif (Options == "Blox Fruit") then
+                for k, l in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if (l.ToolTip == "Blox Fruit") then
+                        if game.Players.LocalPlayer.Backpack:FindFirstChild(tostring(l.Name)) then
+                            SelectedWeapon = l.Name;
+                        end
+                    end
+                end
+    end
+}, "WeaponDropdown")
+
+local AutoFarmToggle = MainTab:CreateToggle({
+    Name = "Auto Farm",
+    Description = "Auto farms level for you.",
+    CurrentValue = false,
+        Callback = function(Value)
+            
+        end
+}, "AutoFarmToggle")
