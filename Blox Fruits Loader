@@ -1,0 +1,15 @@
+-- Sea detect
+local Sea1 = false
+local Sea2 = false
+local Sea3 = false
+
+local PlaceId = game.PlaceId;
+if (PlaceId == 2753915549) then
+    Sea1 = true;
+elseif (PlaceId == 4442272183) then
+    Sea2 = true;
+elseif (PlaceId == 7449423635) then
+    Sea3 = true;
+end
+
+-- Sea 1
