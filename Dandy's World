@@ -1,10 +1,164 @@
 print("Loading Poltergeist Hub (Dandy's World) v.1.0.5")
+local player = game.Players.LocalPlayer
+-- Creating mobile support
+local G2L = {};
+if player.PlayerGui:FindFirstChild("ScreenGui") then
+-- StarterGui.PoltergeistHub.NSS
+G2L["2"] = Instance.new("TextButton", player.PlayerGui.ScreenGui);
+G2L["2"]["BorderSizePixel"] = 0;
+G2L["2"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["2"]["AutoButtonColor"] = false;
+G2L["2"]["TextSize"] = 14;
+G2L["2"]["BackgroundColor3"] = Color3.fromRGB(46, 46, 46);
+G2L["2"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["2"]["Size"] = UDim2.new(0.05496, 0, 0.11206, 0);
+G2L["2"]["Name"] = [[NSS]];
+G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["2"]["Text"] = [[]];
+G2L["2"]["Position"] = UDim2.new(0.88075, 0, 0.63331, 0);
+G2L["2"]["Visible"] = false
+
+
+-- StarterGui.PoltergeistHub.NSS.Corner
+G2L["3"] = Instance.new("UICorner", G2L["2"]);
+G2L["3"]["Name"] = [[Corner]];
+G2L["3"]["CornerRadius"] = UDim.new(0, 9);
+
+
+-- StarterGui.PoltergeistHub.NSS.Icon
+G2L["4"] = Instance.new("ImageLabel", G2L["2"]);
+G2L["4"]["BorderSizePixel"] = 0;
+G2L["4"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["4"]["ImageTransparency"] = 0.2;
+G2L["4"]["ImageColor3"] = Color3.fromRGB(235, 195, 195);
+G2L["4"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["4"]["Image"] = [[http://www.roblox.com/asset/?id=6034754445]];
+G2L["4"]["Size"] = UDim2.new(0.61, 0, 0.61, 0);
+G2L["4"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["4"]["BackgroundTransparency"] = 1;
+G2L["4"]["Name"] = [[Icon]];
+G2L["4"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+
+-- StarterGui.PoltergeistHub.NSS.Stroke
+G2L["5"] = Instance.new("UIStroke", G2L["2"]);
+G2L["5"]["Transparency"] = 0.8;
+G2L["5"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["5"]["Name"] = [[Stroke]];
+G2L["5"]["Thickness"] = 1.7;
+G2L["5"]["Color"] = Color3.fromRGB(43, 36, 36);
+
+
+-- StarterGui.PoltergeistHub.NSS.Ratio
+G2L["6"] = Instance.new("UIAspectRatioConstraint", G2L["2"]);
+G2L["6"]["AspectRatio"] = 0.97624;
+G2L["6"]["Name"] = [[Ratio]];
+
+
+-- StarterGui.PoltergeistHub.NSS.Scale
+G2L["7"] = Instance.new("UIScale", G2L["2"]);
+G2L["7"]["Name"] = [[Scale]];
+
+
+-- StarterGui.PoltergeistHub.NSS.Gradient
+G2L["8"] = Instance.new("UIGradient", G2L["2"]);
+G2L["8"]["Rotation"] = 70;
+G2L["8"]["Transparency"] = NumberSequence.new{NumberSequenceKeypoint.new(0.000, 0.05),NumberSequenceKeypoint.new(1.000, 0.05)};
+G2L["8"]["Name"] = [[Gradient]];
+G2L["8"]["Offset"] = Vector2.new(0, 0.58);
+G2L["8"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(255, 255, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(242, 199, 199))};
+
+
+-- StarterGui.PoltergeistHub.NSS.Constraint
+G2L["9"] = Instance.new("UISizeConstraint", G2L["2"]);
+G2L["9"]["MinSize"] = Vector2.new(35, 35);
+G2L["9"]["Name"] = [[Constraint]];
+G2L["9"]["MaxSize"] = Vector2.new(70, 70);
+
+
+-- StarterGui.PoltergeistHub.GTG
+G2L["a"] = Instance.new("TextButton", player.PlayerGui.ScreenGui);
+G2L["a"]["BorderSizePixel"] = 0;
+G2L["a"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["a"]["AutoButtonColor"] = false;
+G2L["a"]["TextSize"] = 14;
+G2L["a"]["BackgroundColor3"] = Color3.fromRGB(46, 46, 46);
+G2L["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["a"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["a"]["Size"] = UDim2.new(0.0946, 0, 0.12908, 0);
+G2L["a"]["Name"] = [[GTG]];
+G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["a"]["Text"] = [[]];
+G2L["a"]["Position"] = UDim2.new(0.88021, 0, 0.50715, 0);
+G2L["a"]["Visible"] = false
+
+
+-- StarterGui.PoltergeistHub.GTG.Corner
+G2L["b"] = Instance.new("UICorner", G2L["a"]);
+G2L["b"]["Name"] = [[Corner]];
+G2L["b"]["CornerRadius"] = UDim.new(0, 9);
+
+
+-- StarterGui.PoltergeistHub.GTG.Icon
+G2L["c"] = Instance.new("ImageLabel", G2L["a"]);
+G2L["c"]["BorderSizePixel"] = 0;
+G2L["c"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["c"]["ImageTransparency"] = 0.2;
+G2L["c"]["ImageColor3"] = Color3.fromRGB(235, 195, 195);
+G2L["c"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["c"]["Image"] = [[rbxassetid://74469929771030]];
+G2L["c"]["Size"] = UDim2.new(0.44581, 0, 1, 0);
+G2L["c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["c"]["BackgroundTransparency"] = 1;
+G2L["c"]["Name"] = [[Icon]];
+G2L["c"]["Position"] = UDim2.new(0.49107, 0, 0.5, 0);
+
+
+-- StarterGui.PoltergeistHub.GTG.Stroke
+G2L["d"] = Instance.new("UIStroke", G2L["a"]);
+G2L["d"]["Transparency"] = 0.8;
+G2L["d"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["d"]["Name"] = [[Stroke]];
+G2L["d"]["Thickness"] = 1.7;
+G2L["d"]["Color"] = Color3.fromRGB(43, 36, 36);
+
+
+-- StarterGui.PoltergeistHub.GTG.Ratio
+G2L["e"] = Instance.new("UIAspectRatioConstraint", G2L["a"]);
+G2L["e"]["AspectRatio"] = 0.97624;
+G2L["e"]["Name"] = [[Ratio]];
+
+
+-- StarterGui.PoltergeistHub.GTG.Scale
+G2L["f"] = Instance.new("UIScale", G2L["a"]);
+G2L["f"]["Name"] = [[Scale]];
+
+
+-- StarterGui.PoltergeistHub.GTG.Gradient
+G2L["10"] = Instance.new("UIGradient", G2L["a"]);
+G2L["10"]["Rotation"] = 70;
+G2L["10"]["Transparency"] = NumberSequence.new{NumberSequenceKeypoint.new(0.000, 0.05),NumberSequenceKeypoint.new(1.000, 0.05)};
+G2L["10"]["Name"] = [[Gradient]];
+G2L["10"]["Offset"] = Vector2.new(0, 0.58);
+G2L["10"]["Color"] = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(255, 255, 255)),ColorSequenceKeypoint.new(1.000, Color3.fromRGB(242, 199, 199))};
+
+
+-- StarterGui.PoltergeistHub.GTG.Constraint
+G2L["11"] = Instance.new("UISizeConstraint", G2L["a"]);
+G2L["11"]["MinSize"] = Vector2.new(35, 35);
+G2L["11"]["Name"] = [[Constraint]];
+G2L["11"]["MaxSize"] = Vector2.new(70, 70);
+end
+
+
+
 -- Dandy's World
 local GGI = false
 local TpWalkSpeed = 0.5
 local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
 local VirtualInputManager = game:GetService('VirtualInputManager')
-local player = game.Players.LocalPlayer
+local UIS = game:GetService("UserInputService")
 
 -- Configuration
 -- Generator esp
@@ -59,7 +213,7 @@ local Window = Poltergeist:CreateWindow({
     LogoID = "101636243364181",
     LoadingEnabled = true,
     LoadingTitle = "Poltergeist Hub", 
-    LoadingSubtitle = "V1.0.5 (BETA)",
+    LoadingSubtitle = "V1.0.6 (BETA)",
     ConfigSettings = {
         RootFolder = "PoltergeistHubDW",
         ConfigFolder = "PoltergeistHub"
@@ -1035,14 +1189,17 @@ local function GettingChased()
     end
     return false
 end
-
+local GGI
 local GGIToggle = GeneralTab:CreateToggle({
-    Name = "🔘 Use go to a generator input",
-    Description = "Enable the Go to a generator input.",
+    Name = "🔘 Enable go to a generator",
+    Description = "Enable the Go to a generator function. It will create a button on the screen if you are mobile.",
     CurrentValue = false,
     Callback = function(v)
         GGI = v
         if GGI then
+if not UIS.KeyboardEnabled then
+player.PlayerGui.ScreenGui.GTG.Visible = true
+end
             sound(8486683243)
             Poltergeist:Notification({
                 Title = "Use Go To a Generator Input",
@@ -1051,6 +1208,9 @@ local GGIToggle = GeneralTab:CreateToggle({
                 Content = "Use Go To a Generator Input activated."
             })
         else
+if not UIS.KeyboardEnabled then
+player.PlayerGui.ScreenGui.GTG.Visible = false
+end
             sound(17208361335)
             Poltergeist:Notification({
                 Title = "Use Go To a Generator Input",
@@ -1063,17 +1223,10 @@ local GGIToggle = GeneralTab:CreateToggle({
 })
 
 -- Variáveis globais
-local TTG = false -- Manual Go To Generator state (likely can be removed if only AutoFarm is used)
-local GGI = true -- Assuming this means General Group Interface is enabled?
-local AutoFarm = false
+local TTG = false
 local ActiveTweens = {} -- ONLY for generator movement tweens
 local StopTweensFlag = false -- Flag to signal cancellation
-local AutoFarmThread = nil
-local currentState = "Idle" -- ["Idle", "Moving", "Interacting", "Working", "Hiding"]
 local targetGenerator = nil
-local isHiding = false -- Specific state for the hiding mechanism
-local hideAttachment = nil
-local hideVelocity = nil
 
 -- Serviços
 local TweenService = game:GetService("TweenService")
@@ -1084,11 +1237,6 @@ local RunService = game:GetService("RunService") -- Added RunService
 -- Player Reference
 local player = Players.LocalPlayer
 
--- Configuração
-local HIDE_ALTITUDE_GAIN = 120 -- How many studs to rise when hiding (Increased)
-local HIDE_ASCEND_DURATION = 0.5 -- Seconds for the initial upward boost (Very Short)
-local HIDE_VELOCITY_MAGNITUDE = HIDE_ALTITUDE_GAIN / HIDE_ASCEND_DURATION -- Calculate velocity needed
-local HOVER_MAX_FORCE = 100000 -- High force to counteract gravity effectively
 
 -- Funções auxiliares
 local function safeFind(instance, child)
@@ -1235,86 +1383,95 @@ local function GettingChased()
     return false
 end
 
--- Espera pela conclusão do gerador. Retorna true se completou, false se interrompido.
-local function waitForCompletion(generator)
-    local stats = generator and generator:FindFirstChild("Stats")
-    local completed = stats and stats:FindFirstChild("Completed")
-    if not completed then return false end -- Gerador inválido
+local function GTG()
+    if GGI then
+        if TTG then
+            StopTweensFlag = true
 
-    while completed.Value == false do
-        if not AutoFarm or GettingChased() then
-            return false -- Interrompido
+            local manualTweens = {}
+            for _, tween in pairs(ActiveTweens) do
+                table.insert(manualTweens, tween)
+            end
+
+            for _, tween in pairs(manualTweens) do
+                pcall(function() tween:Cancel() end)
+                for i, t in ipairs(ActiveTweens) do
+                    if t == tween then
+                        table.remove(ActiveTweens, i)
+                        break
+                    end
+                end
+            end
+
+            sound(17208361335)
+            Poltergeist:Notification({
+                Title = "Notification",
+                Icon = "notifications_active",
+                ImageSource = "Material",
+                Content = "Manual movement stopped."
+            })
+
+            TTG = false
+            StopTweensFlag = false
+            return
         end
-        task.wait(0.2)
+
+        StopTweensFlag = true
+        task.wait(0.05)
+        StopTweensFlag = false
+
+        local closestGenerator = getClosestGenerator()
+
+        if closestGenerator then
+            local prompt = closestGenerator:FindFirstChild("Prompt")
+            if prompt and prompt:IsA("BasePart") then
+                TTG = true
+
+                task.spawn(function()
+                    local success = moveToPromptYield(prompt)
+                    if success and not GettingChased() and TTG then
+                        task.wait(0.3)
+                        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+                        task.wait(0.1)
+                        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+                    end
+                    TTG = false
+                end)
+
+                sound(8486683243)
+                Poltergeist:Notification({
+                    Title = "Notification",
+                    Icon = "notifications_active",
+                    ImageSource = "Material",
+                    Content = "Going to the generator..."
+                })
+            else
+                Poltergeist:Notification({
+                    Title = "Error",
+                    Icon = "error",
+                    ImageSource = "Material",
+                    Content = "Prompt part not found!"
+                })
+            end
+        else
+            Poltergeist:Notification({
+                Title = "Notification",
+                Icon = "info",
+                ImageSource = "Material",
+                Content = "No incomplete generators found!"
+            })
+        end
     end
-    return true -- Completou
-end
-
--- Inicia a mecânica de esconder (subir e pairar)
-local function startHiding()
-    if isHiding then return end -- Já está se escondendo
-    isHiding = true
-    currentState = "Hiding"
-    print("Auto Farm: Being chased! Initiating hide...")
-
-    -- Cancela qualquer movimento de gerador atual
-    StopTweensFlag = true
-    for _, tween in pairs(ActiveTweens) do pcall(function() tween:Cancel() end) end
-    ActiveTweens = {}
-    StopTweensFlag = False -- Reset flag after use
-
-    local hrp = getHumanoidRootPart()
-    if not hrp then isHiding = false; currentState = "Idle"; return end
-
-    -- Limpa física de esconder anterior, se houver
-    if hideVelocity then pcall(function() hideVelocity:Destroy() end); hideVelocity = nil end
-    if hideAttachment then pcall(function() hideAttachment:Destroy() end); hideAttachment = nil end
-
-    -- Cria Attachment e LinearVelocity
-    hideAttachment = Instance.new("Attachment", hrp)
-    hideVelocity = Instance.new("LinearVelocity", hideAttachment)
-    hideVelocity.Attachment0 = hideAttachment
-    hideVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
-    hideVelocity.MaxForce = HOVER_MAX_FORCE -- Força alta para subir rápido e pairar
-
-    -- Impulso inicial para cima
-    hideVelocity.VectorVelocity = Vector3.new(0, HIDE_VELOCITY_MAGNITUDE, 0)
-    hideVelocity.Enabled = true
-
-    -- Após um curto período, para o impulso e começa a pairar (velocidade zero, força alta)
-    task.delay(HIDE_ASCEND_DURATION, function()
-        if hideVelocity then -- Verifica se ainda existe
-             hideVelocity.VectorVelocity = Vector3.new(0, 0, 0)
-             print("Auto Farm: Reached hover altitude.")
-        end
-    end)
-end
-
--- Para a mecânica de esconder (remove física, permite cair)
-local function stopHiding()
-    if not isHiding then return end -- Não está se escondendo
-    print("Auto Farm: No longer chased. Stopping hide...")
-    if hideVelocity then pcall(function() hideVelocity:Destroy() end); hideVelocity = nil end
-    if hideAttachment then pcall(function() hideAttachment:Destroy() end); hideAttachment = nil end
-    isHiding = false
-    currentState = "Idle" -- Volta ao estado ocioso para procurar gerador
-end
-
-local function checkElevator()
-    local elevator = workspace:FindFirstChild("Elevator")
-    local elevatorBase = elevator and elevator:FindFirstChild("ElevatorBase")
-    local hrp = getHumanoidRootPart()
-    if not elevatorBase or not hrp then return false end
-
-    -- Calcula distância horizontal para ignorar altura
-    local hrpPos2D = Vector3.new(hrp.Position.X, 0, hrp.Position.Z)
-    local elevPos2D = Vector3.new(elevatorBase.Position.X, 0, elevatorBase.Position.Z)
-
-    return (hrpPos2D - elevPos2D).Magnitude < 20 -- Aumenta um pouco o raio de checagem
 end
 
 
-
+local function MS_GTG()
+local script = G2L["FunctionGTG"];
+	G2L["a"].MouseButton1Click:Connect(function()
+		GTG()
+	end)
+end;
+task.spawn(MS_GTG);
 -- ==================
 -- ELEMENTOS DA UI E CALLBACKS
 -- ==================
@@ -1328,85 +1485,10 @@ local GTGBind = GeneralTab:CreateBind({
     CurrentBind = "Q",
     HoldToInteract = false,
     Callback = function(BindState)
-        if GGI then -- Assume GGI is a valid check
-            if TTG then -- Se já estiver indo para um (TTG = True To Go?)
-                StopTweensFlag = true
+        GTG()
+    end 
+}, "GTGBind") 
 
-                -- Cancela todos os tweens ativos (movimento manual)
-                -- Nota: Não limpa tweens de auto farm, apenas os de movimento manual
-                local manualTweens = {} -- Cópia para iterar e remover
-                 for _, tween in pairs(ActiveTweens) do table.insert(manualTweens, tween) end
-
-                 for _, tween in pairs(manualTweens) do
-                     pcall(function() tween:Cancel() end)
-                     -- Remove da lista principal ActiveTweens se existir
-                     for i, t in ipairs(ActiveTweens) do
-                         if t == tween then table.remove(ActiveTweens, i); break end
-                     end
-                 end
-                 -- ActiveTweens = {} -- Limpa APENAS se não houver AutoFarm ativo? Melhor não limpar globalmente aqui.
-
-                sound(17208361335)
-                Poltergeist:Notification({
-                    Title = "Notification",
-                    Icon = "notifications_active",
-                    ImageSource = "Material",
-                    Content = "Manual movement stopped."
-                })
-
-                TTG = false -- Reseta o estado de movimento manual
-                StopTweensFlag = false
-                return
-            end
-
-            -- Se não estava indo, inicia o movimento manual
-            -- Cancela tweens manuais anteriores se existirem
-            StopTweensFlag = true
-            task.wait(0.05) -- Pequena espera para permitir cancelamento
-            StopTweensFlag = false
-            -- Limpa tweens manuais anteriores (se houver - segurança)
-            -- Note: Isso pode interferir com AutoFarm se não for cuidadoso.
-            -- Idealmente, AutoFarm e movimento manual deveriam ser mutuamente exclusivos.
-
-            local closestGenerator = getClosestGenerator()
-
-            if closestGenerator then
-                local prompt = closestGenerator:FindFirstChild("Prompt")
-                if prompt and prompt:IsA("BasePart") then
-                    TTG = true -- Marca que está em movimento manual
-
-                    -- Usa a função yield para mover e interagir ao final
-                    task.spawn(function()
-                        local success = moveToPromptYield(prompt)
-                        if success and not GettingChased() and TTG then -- Verifica TTG para garantir que não foi cancelado
-                            task.wait(0.3)
-                            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-                            task.wait(0.1)
-                            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-                        end
-                        TTG = false -- Reseta ao terminar ou falhar
-                    end)
-
-                    sound(8486683243)
-                    Poltergeist:Notification({
-                        Title = "Notification",
-                        Icon = "notifications_active",
-                        ImageSource = "Material",
-                        Content = "Going to the generator (Manual)..."
-                    })
-                else
-                    Poltergeist:Notification({ Title = "Error", Icon = "error", Content = "Prompt part not found!" })
-                end
-            else
-                Poltergeist:Notification({ Title = "Notification", Icon = "info", Content = "No incomplete generators found!" })
-            end
-        end
-    end,
-    OnChangedCallback = function(Bind)
-        sound(17208361335)
-        Poltergeist:Notification({ Title = "Notification", Icon = "notifications_active", Content = "Keybind changed!" })
-    end,
-}, "GTGBind")
 
 
 local StopTweensBtn = GeneralTab:CreateButton({
@@ -1523,6 +1605,38 @@ localPlayer.CharacterAdded:Connect(function()
         StartTeleportWalk(TpWalkSpeedSlider.CurrentValue)
     end
 end)
+local NSSI
+local NSSIToggle = PlayerTab:CreateToggle({
+    Name = "🔘 Enable No Stamina Sprint",
+    Description = "Enable the No Stamina Sprint function. It will create a button on the screen if you are mobile.",
+    CurrentValue = false,
+    Callback = function(v)
+        NSSI = v
+        if NSSI then
+if not UIS.KeyboardEnabled then
+player.PlayerGui.ScreenGui.NSS.Visible = true
+end
+            sound(8486683243)
+            Poltergeist:Notification({
+                Title = "Enable No Stamina Sprint",
+                Icon = "check_circle",
+                ImageSource = "Material",
+                Content = "No Stamina Sprint enabled."
+            })
+        else
+if not UIS.KeyboardEnabled then
+player.PlayerGui.ScreenGui.NSS.Visible = false
+end
+            sound(17208361335)
+            Poltergeist:Notification({
+                Title = "Enable No Stamina Sprint",
+                Icon = "cancel",
+                ImageSource = "Material",
+                Content = "No Stamina Sprint Disabled."
+            })
+        end
+    end
+})
 
 local StarsDropdown = PlayerTab:CreateDropdown({
     Name = "🌟 Choose Movement stars",
@@ -1539,6 +1653,7 @@ local StarsDropdown = PlayerTab:CreateDropdown({
 local sprintConnection
 
 local function enableSprint()
+G2L["4"]["Image"] = [[http://www.roblox.com/asset/?id=6034754448]];
     local character = player.Character
     if not character then return end
 
@@ -1559,6 +1674,7 @@ local function enableSprint()
 end
 
 local function disableSprint()
+G2L["4"]["Image"] = [[http://www.roblox.com/asset/?id=6034754445]];
     if player.Character then
         player.Character.Humanoid.WalkSpeed = player.Character.Stats.WalkSpeed.Value
     end
@@ -1569,36 +1685,40 @@ local function disableSprint()
     end
 end
 
--- BOTÃO No Stamina
-local NSS = false  -- Variável global para controlar estado de No-Stamina Sprint
 
-local NSSToggle = PlayerTab:CreateToggle({
+local NSsprinting = false 
+local function MS_NSS()
+local script = G2L["FunctionNSS"];
+	G2L["2"].MouseButton1Click:Connect(function()
+		if NSsprinting then
+NSsprinting = false
+ disableSprint()
+else
+NSsprinting = true
+   enableSprint()
+end
+	end)
+end;
+task.spawn(MS_NSS);
+local NSSBind = PlayerTab:CreateBind({
     Name = "🐎 No-Stamina Sprint",
     Description = "Makes you sprint without draining stamina.",
-    CurrentValue = false,
-    Callback = function(v)
-        NSS = v
-        if v then
-            sound(8486683243)
-            Poltergeist:Notification({
-                Title = "No-Stamina Sprint",
-                Icon = "check_circle",
-                ImageSource = "Material",
-                Content = "No-Stamina Sprint activated."
-            })
-            enableSprint()
-        else
-            sound(17208361335)
-            Poltergeist:Notification({
-                Title = "No-Stamina Sprint",
-                Icon = "cancel",
-                ImageSource = "Material",
-                Content = "No-Stamina Sprint deactivated."
-            })
-            disableSprint()
-        end
+    CurrentBind = "E",
+    HoldToInteract = false,
+    Callback = function(BindState)
+
+if NSSI then
+if NSsprinting then
+NSsprinting = false
+ disableSprint()
+else
+NSsprinting = true
+   enableSprint()
+end
+end
     end
-})
+}, "NSSBind")
+
 -- Noclip Feature
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -1708,88 +1828,6 @@ local NoclipToggle = PlayerTab:CreateToggle({
                 Content = "Noclip deactivated."
             })
             disableNoclip()
-        end
-    end
-})
-
-
--- God Mode
-local GodMode = false
-local GodModeToggle = PlayerTab:CreateToggle({
-    Name = "🌌 God Mode",
-    Description = "Vro ts pmo sm rn icl, r u fr cz lol sybau this god mode sucks who tf made ts 💔",
-    CurrentValue = false,
-    Callback = function(v)
-        GodMode = v
-        if GodMode then
-            sound(8486683243)
-          Poltergeist:Notification({
-                Title = "God Mode",
-                Icon = "check_circle",
-                ImageSource = "Material",
-                Content = "God Mode activated."
-            })
-
-            local function LPGettingChased()
-                local currentRoom = game.Workspace:FindFirstChild("CurrentRoom")
-                if not currentRoom then return false end
-
-                for _, child in ipairs(currentRoom:GetChildren()) do
-                    if child:IsA("Model") then
-                        local monstersContainer = child:FindFirstChild("Monsters")
-                        if monstersContainer then
-                            for _, monster in ipairs(monstersContainer:GetChildren()) do
-                                local chasingValue = monster:FindFirstChild("ChasingValue")
-                                if chasingValue and chasingValue:IsA("ObjectValue") then
-                                    if chasingValue.Value == player or chasingValue.Value == player.Character then
-                                        return true
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-                return false
-            end
-
-            local function CHH(height)
-                local character = player.Character or player.CharacterAdded:Wait()
-                local humanoid = character:FindFirstChildOfClass("Humanoid")
-                if humanoid then
-                    humanoid.HipHeight = height
-                end
-            end
-
-            local conn
-            conn = game:GetService("RunService").Heartbeat:Connect(function()
-                if not GodMode then
-                    conn:Disconnect()
-                    return
-                end
-
-                if LPGettingChased() then
-                    CHH(5.5)
-                else
-                    CHH(1.41)
-                end
-            end)
-        else
-            local function CHH(height)
-                local character = player.Character or player.CharacterAdded:Wait()
-                local humanoid = character:FindFirstChildOfClass("Humanoid")
-                if humanoid then
-                    humanoid.HipHeight = height
-                end
-            end
-            CHH(1.41)
-
-            sound(17208361335)
-            Poltergeist:Notification({
-                Title = "God Mode",
-                Icon = "cancel",
-                ImageSource = "Material",
-                Content = "God Mode deactivated."
-            })
         end
     end
 })
@@ -2014,14 +2052,14 @@ local AmountColorPicker = OthersTab:CreateColorPicker({
     end
 }, "amountcolorpicker")
 OthersTab:CreateSection("Twisted ESP")
-local ItemEspColorPicker = OthersTab:CreateColorPicker({
-    Name = "🖋 Item ESP color",
-    Color = Color3.fromRGB(255, 215, 0),
-    Flag = "itemespcolor",
+local TwistedEspColorPicker = OthersTab:CreateColorPicker({
+    Name = "🖋 Twisted ESP color",
+    Color = Color3.fromRGB(255, 0, 0),
+    Flag = "twistedespcolor",
     Callback = function(Value)
-        ItemEspColor = Value
+        TwistedEspColor = Value
     end
-}, "itemespcolor")
+}, "twistedespcolor")
 
 
 local ShowDT = false
