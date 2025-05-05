@@ -213,7 +213,7 @@ local Window = Poltergeist:CreateWindow({
     LogoID = "101636243364181",
     LoadingEnabled = true,
     LoadingTitle = "Poltergeist Hub", 
-    LoadingSubtitle = "V1.0.6 (BETA)",
+    LoadingSubtitle = "V1.0.7 (BETA)",
     ConfigSettings = {
         RootFolder = "PoltergeistHubDW",
         ConfigFolder = "PoltergeistHub"
@@ -407,7 +407,7 @@ local GeneratorESPToggle = VisualTab:CreateToggle({
          coroutine.wrap(function()
     while GeneratorESP do
         UpdateGeneratorESP()
-        task.wait(0.3) -- espera entre atualizações (ajuste como quiser)
+        task.wait(0.3)
     end
 end)()
 
@@ -757,10 +757,10 @@ local ASC2 = GeneralTab:CreateToggle({
         local runService = game:GetService("RunService")
         local virtualInputManager = game:GetService("VirtualInputManager")
         local ScreenGui = player:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui")
-        -- Declarar conexión fuera de la función
+       
         if not _G.connection then _G.connection = nil end
 
-        -- Verificación inicial
+       
         if not ScreenGui then
             warn("ScreenGui not found.")
             return
@@ -780,7 +780,7 @@ local ASC2 = GeneralTab:CreateToggle({
         local timeElapsed = 0
         local checkInterval = 0.01
 
-        -- Función para presionar la tecla espacio
+      
         local function pressSpace()
             if skillCheckFrame.Visible then
                 virtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
@@ -788,7 +788,7 @@ local ASC2 = GeneralTab:CreateToggle({
             end
         end
 
-        -- Función para comprobar la posición de los frames
+     
         local function checkFramesPosition()
             local frame1X = marker.AbsolutePosition.X
             local frame2X = goldArea.AbsolutePosition.X
@@ -799,7 +799,7 @@ local ASC2 = GeneralTab:CreateToggle({
                 pressSpace()
             end
         end
-        -- Si el toggle está activado
+        
         if state then
              sound(8486683243)
         Poltergeist:Notification({
@@ -808,13 +808,13 @@ local ASC2 = GeneralTab:CreateToggle({
                 ImageSource = "Material",
                 Content = "Auto Skill Check 2 activated."
             })
-            -- Asegurarse de que no haya conexiones previas
+           
             if _G.connection then
                 _G.connection:Disconnect()
                 _G.connection = nil
             end
 
-            -- Inicia la verificación del marcador
+            
             _G.connection = runService.RenderStepped:Connect(function(deltaTime)
                 timeElapsed = timeElapsed + deltaTime
                 if timeElapsed >= checkInterval then
@@ -1050,24 +1050,23 @@ local ntfrmToggle = GeneralTab:CreateToggle({
 
             local currentRoom = game.Workspace:FindFirstChild("CurrentRoom")
             if currentRoom then
-                -- Continuously check for monsters
+        
                 while ntfrm do
                     for _, model in ipairs(currentRoom:GetChildren()) do
                         if model:IsA("Model") then
                             local monstersFolder = model:FindFirstChild("Monsters")
                             if monstersFolder then
-                                -- Check the monsters within Monsters folder
+                              
                                 for _, monster in ipairs(monstersFolder:GetChildren()) do
                                     if table.find(targetMonsters, monster.Name) and not notifiedMonsters[monster.Name] then
-                                        sendNotification(monster.Name) -- Send the notification
-                                        notifiedMonsters[monster.Name] = true -- Mark the monster as notified
+                                        sendNotification(monster.Name) 
+                                        notifiedMonsters[monster.Name] = true 
                                     end
                                 end
                             end
                         end
                     end
-                    
-                    -- Clean up monsters that are no longer present
+
                     for monsterName, _ in pairs(notifiedMonsters) do
                         local stillExists = false
                         for _, model in ipairs(currentRoom:GetChildren()) do
@@ -1078,7 +1077,7 @@ local ntfrmToggle = GeneralTab:CreateToggle({
                             end
                         end
                         if not stillExists then
-                            notifiedMonsters[monsterName] = nil -- Remove monsters that are no longer present
+                            notifiedMonsters[monsterName] = nil
                         end
                     end
                     task.wait(5)
@@ -1106,7 +1105,7 @@ local ntfriToggle = GeneralTab:CreateToggle({
     Callback = function(v)
         ntfri = v
         if ntfri then
-            sound(8486683243)  -- Notification sound when activated
+            sound(8486683243)
              Poltergeist:Notification({
                 Title = "Notify Rare Items",
                 Icon = "check_circle",
@@ -1121,7 +1120,7 @@ local ntfriToggle = GeneralTab:CreateToggle({
                     ImageSource = "Material",
                     Content = "A rare item has appeared! Item name: " .. itemName
                 })
-                sound(8486683243)  -- Notification sound when a rare item appears
+                sound(8486683243)
             end
             local targetItems = {
                 "Bandage",
@@ -1137,7 +1136,7 @@ local ntfriToggle = GeneralTab:CreateToggle({
             }
             local currentRoom = game.Workspace:FindFirstChild("CurrentRoom")
             if currentRoom then
-                while ntfri do  -- This checks if the toggle is active
+                while ntfri do
                     for _, model in ipairs(currentRoom:GetChildren()) do
                         if model:IsA("Model") then
                             local itemsFolder = model:FindFirstChild("Items")
@@ -1145,19 +1144,19 @@ local ntfriToggle = GeneralTab:CreateToggle({
                                 for _, item in ipairs(itemsFolder:GetChildren()) do
                                     if table.find(targetItems, item.Name) and not notifiedItem[item.Name] then
                                         sendNotificationItem(item.Name)
-                                        notifiedItem[item.Name] = true  -- Mark item as notified
+                                        notifiedItem[item.Name] = true
                                     end
                                 end
                             end
                         end
                     end
-                    task.wait(5)  -- Wait before checking again
+                    task.wait(5)
                 end
             else
                 warn("There is no current room in workspace!")
             end
         else
-            sound(17208361335)  -- Sound when deactivated
+            sound(17208361335)
             Poltergeist:Notification({
                 Title = "Notify Rare Items",
                 Icon = "cancel",
@@ -1222,23 +1221,19 @@ end
     end
 })
 
--- Variáveis globais
+
 local TTG = false
-local ActiveTweens = {} -- ONLY for generator movement tweens
-local StopTweensFlag = false -- Flag to signal cancellation
+local ActiveTweens = {} 
+local StopTweensFlag = false
 local targetGenerator = nil
 
--- Serviços
 local TweenService = game:GetService("TweenService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
-local Players = game:GetService("Players") -- Added Players service reference
-local RunService = game:GetService("RunService") -- Added RunService
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
--- Player Reference
 local player = Players.LocalPlayer
 
-
--- Funções auxiliares
 local function safeFind(instance, child)
     return instance and instance:FindFirstChild(child)
 end
@@ -1248,19 +1243,16 @@ local function safePosition(part)
 end
 
 local function getHumanoidRootPart()
-    -- More robust check
     if not player then return nil end
     local character = player.Character
     return character and character:FindFirstChild("HumanoidRootPart")
 end
 
--- Retorna o gerador mais próximo que não está completo e não está ocupado por outro jogador (ou está ocupado por nós mesmos)
 local function getClosestGenerator()
     local cr = workspace:FindFirstChild("CurrentRoom")
     local rooms = cr and cr:GetChildren() or {}
     local room = nil
 
-    -- Encontra o modelo de sala mais recente
     for i = #rooms, 1, -1 do
         if rooms[i]:IsA("Model") then
             room = rooms[i]
@@ -1281,12 +1273,11 @@ local function getClosestGenerator()
     for _, g in ipairs(list) do
         local stats = safeFind(g, "Stats")
         local completed = stats and safeFind(stats, "Completed")
-        local active = stats and safeFind(stats, "ActivePlayer") -- ObjectValue expected
+        local active = stats and safeFind(stats, "ActivePlayer")
         local prompt = safeFind(g, "Prompt")
         local promptPos = safePosition(prompt)
 
         if promptPos and completed and not completed.Value then
-            -- Checa se está livre ou se nós estamos usando
             local isActiveByOther = active and active.Value and active.Value ~= player and active.Value ~= player.Character and active.Value ~= player.Name
             if not isActiveByOther then
                 local dist = (hrpPos - promptPos).Magnitude
@@ -1299,15 +1290,13 @@ local function getClosestGenerator()
 
     return closestGen
 end
-
--- Move para o prompt e ESPERA a conclusão ou cancelamento. Retorna true se completou, false se cancelou/falhou.
 local function moveToPromptYield(prompt)
     local hrp = getHumanoidRootPart()
     if not hrp or not prompt or not prompt:IsA("BasePart") then return false end
 
-    local targetCFrame = prompt.CFrame * CFrame.new(0, 0, -3) -- Slightly adjusted offset
+    local targetCFrame = prompt.CFrame * CFrame.new(0, 0, -3)
     local distance = (hrp.Position - targetCFrame.Position).Magnitude
-    local duration = math.max(0.5, distance * 0.06) -- Adjusted duration calculation, minimum 0.5s
+    local duration = math.max(0.5, distance * 0.06)
 
     local tween = TweenService:Create(hrp, TweenInfo.new(duration, Enum.EasingStyle.Linear), {
         CFrame = targetCFrame
@@ -1317,10 +1306,8 @@ local function moveToPromptYield(prompt)
     local completed = false
     local cancelled = false
 
-    -- Adiciona à lista para possível cancelamento externo
     table.insert(ActiveTweens, tween)
 
-    -- Função para limpar esta tween específica
     local function cleanupTween()
         if connection then connection:Disconnect() connection = nil end
         for i, t in ipairs(ActiveTweens) do
@@ -1331,11 +1318,10 @@ local function moveToPromptYield(prompt)
         end
     end
 
-    -- Conecta ao Completed
     connection = tween.Completed:Connect(function(playbackState)
         if playbackState == Enum.PlaybackState.Completed then
             completed = true
-        else -- Cancelled or Stopped
+        else 
             cancelled = true
         end
         cleanupTween()
@@ -1343,19 +1329,17 @@ local function moveToPromptYield(prompt)
 
     tween:Play()
 
-    -- Espera até que a tween termine ou seja cancelada pelo StopTweensFlag
     while not completed and not cancelled and not StopTweensFlag do
         task.wait(0.1)
     end
 
-    -- Se foi cancelada pelo flag, garante que a tween pare e limpe
     if StopTweensFlag and not completed and not cancelled then
          pcall(function() tween:Cancel() end)
          cleanupTween()
-         return false -- Considera cancelado
+         return false
     end
 
-    return completed -- Retorna true apenas se completou naturalmente
+    return completed
 end
 
 
@@ -1369,9 +1353,7 @@ local function GettingChased()
             if monstersContainer then
                 for _, monster in ipairs(monstersContainer:GetChildren()) do
                     local chasingValue = monster:FindFirstChild("ChasingValue")
-                    -- Verifica se ChasingValue existe e é um ObjectValue
                     if chasingValue and chasingValue:IsA("ObjectValue") then
-                        -- Compara com o Jogador, Personagem ou Nome (redundância segura)
                         if chasingValue.Value == player or chasingValue.Value == player.Character or chasingValue.Value == player.Name then
                             return true
                         end
@@ -1472,13 +1454,7 @@ local script = G2L["FunctionGTG"];
 	end)
 end;
 task.spawn(MS_GTG);
--- ==================
--- ELEMENTOS DA UI E CALLBACKS
--- ==================
 
--- UI Element Creation (Assumindo que 'GeneralTab' já está definido)
--- [[ SEU CÓDIGO GTGBind e StopTweensBtn permanecem os mesmos ]]
--- ... (Cole seu código para GTGBind e StopTweensBtn aqui) ...
 local GTGBind = GeneralTab:CreateBind({
     Name = "⚙️ Go to a generator",
     Description = "Makes you go to the nearest incomplete generator, click again to stop the tween. (Use noclip and don't use that on the elevator.)",
@@ -1488,46 +1464,6 @@ local GTGBind = GeneralTab:CreateBind({
         GTG()
     end 
 }, "GTGBind") 
-
-
-
-local StopTweensBtn = GeneralTab:CreateButton({
-    Name = "⛔ Stop Active Tweens",
-    Description = "Immediately stops all active movement tweens (Manual & AutoFarm)",
-    Callback = function()
-        StopTweensFlag = true -- Sinaliza para parar loops e tweens que checam isso
-
-        -- Cancela todos os tweens ativos na lista global
-        -- Cópia para evitar problemas ao remover durante iteração
-        local tweensToCancel = {}
-        for _, tween in pairs(ActiveTweens) do table.insert(tweensToCancel, tween) end
-
-        for _, tween in pairs(tweensToCancel) do
-            pcall(function() tween:Cancel() end)
-        end
-        ActiveTweens = {} -- Limpa a lista global após cancelar
-
-        -- Para a física de esconder se estiver ativa
-        if isHiding then stopHiding() end
-
-        -- Reseta estados
-        TTG = false -- Para movimento manual se estava ativo
-        currentState = "Idle" -- Reseta estado do AutoFarm
-        targetGenerator = nil
-
-        sound(17208361335)
-        Poltergeist:Notification({
-                Title = "Tween Stopped",
-                Icon = "check_circle",
-                ImageSource = "Material",
-                Content = "All movement has been stopped."
-            })
-
-        -- Reseta o flag após um pequeno delay para garantir que os loops perceberam
-        task.wait(0.1)
-        StopTweensFlag = false
-    end
-})
 
 -- Player Tab Features
 local tpWalking = false
@@ -1605,6 +1541,65 @@ localPlayer.CharacterAdded:Connect(function()
         StartTeleportWalk(TpWalkSpeedSlider.CurrentValue)
     end
 end)
+
+local WalkSpeedSlider = PlayerTab:CreateSlider({
+    Name = "Walk Speed",
+    Description = "Adjust movement speed",
+    Range = {1, 100},
+    Increment = 1,
+    CurrentValue = 16,
+})
+
+local wsConnection
+
+local function enableWalkSpeed()
+    local character = player.Character
+    if not character then return end
+
+    wsConnection = RunService.Stepped:Connect(function()
+        if not character or not character.Parent then return end
+            character.Humanoid.WalkSpeed = WalkSpeedSlider.CurrentValue
+    end)
+end
+
+local function disableWalkSpeed()
+    if player.Character then
+        player.Character.Humanoid.WalkSpeed = player.Character.Stats.WalkSpeed.Value
+    end
+
+    if wsConnection then
+        wsConnection:Disconnect()
+        wsConnection = nil
+    end
+end
+
+local TpWalkToggle = PlayerTab:CreateToggle({
+    Name = "🏃‍♂️ Walk Speed",
+    Description = "Always sets your walk speed to the walk speed of your choose.",
+    CurrentValue = false,
+    Callback = function(Value)
+        if Value then
+            sound(8486683243)
+            Poltergeist:Notification({
+                Title = "Walk Speed",
+                Icon = "check_circle",
+                ImageSource = "Material",
+                Content = "Walk Speed activated."
+            })
+           enableWalkSpeed()
+        else
+            sound(17208361335)
+            Poltergeist:Notification({
+                Title = "Walk Speed",
+                Icon = "cancel",
+                ImageSource = "Material",
+                Content = "Walk Speed deactivated."
+            })
+           disableWalkSpeed()
+        end
+    end
+})
+
 local NSSI
 local NSSIToggle = PlayerTab:CreateToggle({
     Name = "🔘 Enable No Stamina Sprint",
@@ -1642,7 +1637,7 @@ local StarsDropdown = PlayerTab:CreateDropdown({
     Name = "🌟 Choose Movement stars",
     Description = "Choose your movement stars to use in the no stamina sprint option.",
     Options = {"1 Star 🌟", "2 Stars 🌟", "3 Stars 🌟", "4 Stars 🌟", "5 Stars 🌟"},
-    CurrentOption = "1 Star 🌟",  -- Corrigido para string simples
+    CurrentOption = "1 Star 🌟",
     MultipleOptions = false,
     SpecialType = nil,
     Callback = function(option)
@@ -1725,7 +1720,7 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local Noclip = false
 local noclipConnection
-local originalCollisions = {} -- Armazena as colisões originais
+local originalCollisions = {}
 
 local function isValidGround(result, originY)
     if not result then return false end
@@ -1742,7 +1737,6 @@ local function enableNoclip()
     local character = player.Character
     if not character then return end
 
-    -- Desativa colisão do personagem
     for _, part in ipairs(character:GetDescendants()) do
         if part:IsA("BasePart") then
             part.CanCollide = false
@@ -1762,14 +1756,13 @@ local function enableNoclip()
         local result = Workspace:Raycast(origin, direction, params)
         local groundedPart = (result and isValidGround(result, origin.Y)) and result.Instance or nil
 
-        -- Atravessa tudo, exceto o chão
         for _, part in ipairs(Workspace:GetDescendants()) do
             if part:IsA("BasePart") and not part:IsDescendantOf(character) then
                 if not originalCollisions[part] then
                     originalCollisions[part] = part.CanCollide
                 end
                 if groundedPart and part == groundedPart then
-                    part.CanCollide = originalCollisions[part] -- Restaura a colisão original se for o chão
+                    part.CanCollide = originalCollisions[part]
                 else
                     part.CanCollide = false
                 end
@@ -1783,8 +1776,6 @@ local function disableNoclip()
         noclipConnection:Disconnect()
         noclipConnection = nil
     end
-
-    -- Restaura colisão do personagem
     local character = player.Character
     if character then
         for _, part in ipairs(character:GetDescendants()) do
@@ -1793,8 +1784,6 @@ local function disableNoclip()
             end
         end
     end
-
-    -- Restaura a colisão original de todas as partes
     for part, original in pairs(originalCollisions) do
         if part and part:IsDescendantOf(Workspace) then
             part.CanCollide = original
@@ -1803,7 +1792,6 @@ local function disableNoclip()
     table.clear(originalCollisions)
 end
 
--- BOTÃO Noclip
 local NoclipToggle = PlayerTab:CreateToggle({
     Name = "👻 Noclip",
     Description = "turns you into a POLTERGEIST bOooOooOoo",
