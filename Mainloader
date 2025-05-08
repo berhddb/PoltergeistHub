@@ -1,0 +1,3 @@
+if game.PlaceId == 185655149 then -- Bloxburg
+loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Bloxburg", true))()
+end
