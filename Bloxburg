@@ -1,1 +1,78 @@
 
+local Poltergeist = loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/Library/refs/heads/main/Main", true))()
+local executor = identifyexecutor()
+
+local Window = Poltergeist:CreateWindow({
+    Name = "Poltergeist Hub",
+    Subtitle = "Bloxburg",
+    LogoID = "101636243364181",
+    LoadingEnabled = true,
+    LoadingTitle = "Poltergeist Hub", 
+    LoadingSubtitle = "V1.0.0 (BETA)",
+    ConfigSettings = {
+        RootFolder = "PoltergeistHubDR",
+        ConfigFolder = "PoltergeistHub"
+    },
+    KeySystem = false
+})
+
+local GeneralTab = Window:CreateTab({
+    Name = "General",
+    Icon = "house",
+    ImageSource = "Material",
+    ShowTitle = true
+})
+
+local Label = GeneralTab:CreateLabel({
+    Text = "Executor: "..executor,
+    Style =  -- 1-3
+})
+
+local required_functions = {"emulatorbind", "getthreadidentity", "setthreadidentity", "hookmetamethod", "firesignal", "loadstring", "require", "getupvalue", "hookfunction", "checkcaller", "newcclosure"};
+
+local failed_count = 0;
+for _, v in next, required_functions do
+    if rawget(getgenv(), v) == nil then
+        failed_count += 1;
+		Poltergeist:Notification({ 
+    Title = "WARN",
+    Icon = "notifications_active",
+    ImageSource = "Material",
+    Content = "["..failed_count.."] Missing "..v
+})
+wait(1)
+    end
+end
+
+if failed_count > 0 then
+	Poltergeist:Notification({ 
+    	Title = "WARN",
+    	Icon = "notifications_active",
+    	ImageSource = "Material",
+    	Content = "This game doesn't support ".. executor ..", you're missing "..failed_count.." functions we require!"
+	})
+	task.wait(2)
+	local Label = GeneralTab:CreateLabel({
+    Text = "This game doesn't support ".. executor ..", you're missing "..failed_count.." functions we require!",
+    Style = 3 -- 1-3
+})
+    return;
+end
+
+--[[GeneralTab:CreateSection("Auto Farm")]]
+
+--[[local DeliveryAutoFarm = GeneralTab:CreateToggle({
+    Name = "Delivery Auto Farm",
+    Description = 'Auto Farm in Delivery on Pizza Planet',
+    CurrentValue = false,
+        Callback = function(Value)
+            if Value then
+			Poltergeist:Notification({ 
+    			Title = "CALLBACK ERROR",
+    			Icon = "notifications_active",
+    			ImageSource = "Material",
+   				Content = 'The "upvalue" function is missing in your executor'
+			})
+			end
+        end
+}, "DeliveryAutoFarm")]]
