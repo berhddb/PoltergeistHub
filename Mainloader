@@ -1,3 +1,21 @@
+--[[
+     .-.
+   .'   `.
+   :g g   :
+   : o    `.
+  :         ``.
+ :             `.
+:  :         .   `.            POLTERGEIST HUB
+:   :          ` . `.       
+ `.. :            `. ``;
+    `:;             `:'
+       :              `.
+       `.              `.     .
+          `'`'`'`---..,___`;.-'
+ 👻 BOO!  
+]]--
+
+
 if game.GameId == 88070565 then -- Bloxburg
 loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Bloxburg", true))()
 elseif game.GameId == 5569032992 then -- Dandy's World
