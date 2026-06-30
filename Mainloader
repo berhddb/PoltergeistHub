@@ -24,4 +24,6 @@ elseif game.GameId == 1659645941 then -- Islands
 loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Islands", true))()
 elseif game.GameId == 1998835206 then -- Item Asylum
 loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Item%20Asylum", true))()
+elseif game.GameId == 254394801 then -- K.A.T
+loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/K.A.T", true))()
 end
