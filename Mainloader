@@ -19,7 +19,7 @@
 if game.GameId == 88070565 then -- Bloxburg
 loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Bloxburg", true))()
 elseif game.GameId == 5569032992 then -- Dandy's World
-loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Dandy's%20World", true))()
+loadstring(game:HttpGet("https://obfuscatorhub.onrender.com/api/fxq27v7o"))()
 elseif game.GameId == 1659645941 then -- Islands
 loadstring(game:HttpGet("https://raw.githubusercontent.com/berhddb/PoltergeistHub/refs/heads/main/Islands", true))()
 elseif game.GameId == 1998835206 then -- Item Asylum
